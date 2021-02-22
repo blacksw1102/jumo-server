@@ -4,7 +4,9 @@ import express from "express";
 import logger from "morgan";
 import AuthRouter from "./router/Auth";
 import passport from "passport";
-import session from "express-session";
+import * as mysqlSession from 'express-mysql-session';
+import * as session from 'express-session';
+import config from "./Config";
 
 export default class Server {
   public app: express.Application;
@@ -19,12 +21,17 @@ export default class Server {
     this.app.use(logger("dev"));
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
+
+    // session-store
+    const MySQLStore   = mysqlSession.default(session);
+
     // session
     this.app.use(
-      session({
+      session.default({
         resave: false,
         saveUninitialized: false,
-        secret: "fadsfadssadf"
+        secret: "fadsfadssadf",
+        store: new MySQLStore(config.getInstance().db)
       })
     );
     
