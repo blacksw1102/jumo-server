@@ -47,6 +47,12 @@ export default class AuthRouter {
             failureRedirect: "/signup",
             failureFlash: true
         }));
+
+        /* 로그아웃 */
+        this.Router.get('/logout', (req, res) => {
+            req.logout();
+            res.redirect('/');
+        });
     }
 
     public getRouter(): express.Router {
