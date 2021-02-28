@@ -2,9 +2,11 @@ import fs from "fs";
 import path from "path";
 import express from "express";
 import logger from "morgan";
-import AuthRouter from "./router/Auth";
 import passport from "passport";
 import session from "express-session";
+
+import AuthRouter from "./router/Auth";
+import SearchRouter from "./router/Search";
 
 export default class Server {
   public app: express.Application;
@@ -35,5 +37,6 @@ export default class Server {
 
   private initRouter() {
     this.app.use(new AuthRouter().getRouter());
+    this.app.use(new SearchRouter().getRouter());
   }
 }
