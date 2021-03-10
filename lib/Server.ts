@@ -2,11 +2,13 @@ import fs from "fs";
 import path from "path";
 import express from "express";
 import logger from "morgan";
-import AuthRouter from "./router/Auth";
 import passport from "passport";
 import * as mysqlSession from 'express-mysql-session';
 import * as session from 'express-session';
 import config from "./Config";
+
+import AuthRouter from "./router/Auth";
+import SearchRouter from "./router/Search";
 
 export default class Server {
   public app: express.Application;
@@ -42,5 +44,6 @@ export default class Server {
 
   private initRouter() {
     this.app.use(new AuthRouter().getRouter());
+    this.app.use(new SearchRouter().getRouter());
   }
 }
