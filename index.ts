@@ -11,8 +11,11 @@ async function main() {
 
   const app = new Server().app;
 
-  app.listen(8080, () => {
+  let serverPort = Config.getInstance().server.port;
+
+  app.listen(serverPort, () => {
     console.log("Server Start");
+    console.log(`Port : ${serverPort}`);
   });
 }
 
