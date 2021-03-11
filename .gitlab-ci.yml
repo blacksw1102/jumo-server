@@ -1,0 +1,11 @@
+test-dev-run:
+        stage: deploy
+        only:
+                - develop
+        script: 
+                - npm i
+                - npm run build
+                - cp ~/config.json ./config/config.json
+                - npm start
+        tags:
+                - test-dev-run

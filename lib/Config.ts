@@ -1,7 +1,9 @@
 import mysql from "mysql";
 import fs from "fs";
 import path from "path";
-
+export interface ServerConfig {
+  port: number
+}
 export default class Config {
   public static CONFIG_PATH = path.join(
     __dirname,
@@ -12,9 +14,13 @@ export default class Config {
   private static config: Config = new Config();
 
   public db: mysql.ConnectionConfig;
+  public server: ServerConfig;
 
   private constructor() {
     this.db = {};
+    this.server = {
+      port: 8080
+    };
   }
 
   /**
