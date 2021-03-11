@@ -8,7 +8,7 @@ export default class AuthRouter {
 
     /* 로그인 영역 */
     this.Router.get("/quit", (req, res) => {
-      res.end("서버를 종료합니다.");
+      res.end("Server Closed");
       process.exit();
     });
   }
