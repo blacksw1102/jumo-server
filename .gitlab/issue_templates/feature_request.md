@@ -1,12 +1,3 @@
----
-name: Feature request
-about: 프로젝트에 관한 아이디어를 제안할 때 사용합니다.
-title: "[Feature]"
-labels: enhancement
-assignees: ''
-
----
-
 **원하는 솔루션 설명**
 
 원하는 작업에 대해서 명확하고 간결하게 설명해주세요.

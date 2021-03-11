@@ -1,12 +1,3 @@
----
-name: Bug report
-about: 버그에 관한 이슈를 작성할 때 사용합니다.
-title: "[Bug] "
-labels: bug
-assignees: ''
-
----
-
 **버그에 대한 설명**
 
 어떤 버그인지 간결하게 설명해주세요.
