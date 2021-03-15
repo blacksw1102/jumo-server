@@ -1,5 +1,3 @@
-import { connect } from "http2";
-import { Connection } from "mysql";
 import passport from "passport";
 import passportLocal from "passport-local";
 import DB from "./DB";
@@ -13,7 +11,7 @@ export default class Passport {
       console.log('SerializeUser - ', user);
       done(null, user);
     });
-  
+
     passport.deserializeUser((id, done) => {
       console.log('DeserializeUser - ', id);
       DB.getPool().getConnection((err, conn) => {
@@ -41,10 +39,10 @@ export default class Passport {
               (err, data) => {
                 console.log(data);
                 if (err) {
-                    return done(err);
+                  return done(err);
                 }
-                if(!data) {
-                    return done(null, false, { message: "undefined"});
+                if (!data) {
+                  return done(null, false, { message: "undefined" });
                 }
                 return done(null, data.user_id);
               }
@@ -60,10 +58,10 @@ export default class Passport {
       usernameField: 'id',
       passwordField: 'pw',
       passReqToCallback: true
-    }, (req, username, password, done) => {      
+    }, (req, username, password, done) => {
       DB.getPool().getConnection((err, conn) => {
         conn.query('INSERT INTO user VALUES (?, ?, ?, ?, null, 0);', [username, password, req.body.name, req.body.tel], (err, data) => {
-          if(err) {
+          if (err) {
             console.log(err);
             return done(null, false, { message: 'Duplicated ID' });
           } else {

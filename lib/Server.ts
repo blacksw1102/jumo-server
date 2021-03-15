@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import express from "express";
 import logger from "morgan";
 import passport from "passport";
@@ -26,7 +24,7 @@ export default class Server {
     this.app.use(express.json());
 
     // session-store
-    const MySQLStore   = mysqlSession.default(session);
+    const MySQLStore = mysqlSession.default(session);
 
     // session
     this.app.use(
@@ -37,7 +35,7 @@ export default class Server {
         store: new MySQLStore(config.getInstance().db)
       })
     );
-    
+
     // passport
     this.app.use(passport.initialize());
     this.app.use(passport.session());
