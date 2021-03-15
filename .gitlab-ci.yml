@@ -1,11 +1,24 @@
-test-dev-run:
-        stage: deploy
-        only:
-                - develop
-        script: 
-                - npm i
-                - npm run build
-                - cp ~/config.json ./config/config.json
-                - npm start
-        tags:
-                - test-dev-run
+stages:
+  - test
+  - build
+  - run-server
+
+dev-build:
+  stage: build
+  only:
+  - develop
+  script:
+    - npm i
+    - npm run build
+  tags:
+    - test-dev-run
+dev-start-test:
+  stage: run-server
+  script:
+    - npm i
+    - npm run build
+    - cp ~/config.json ./config/config.json
+    - export EXIT_ON_SUCCESS=1
+    - npm run start
+  tags:
+    - test-dev-run

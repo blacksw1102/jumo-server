@@ -16,6 +16,11 @@ async function main() {
   app.listen(serverPort, () => {
     console.log("Server Start");
     console.log(`Port : ${serverPort}`);
+
+    if(process.env.EXIT_ON_SUCCESS) {
+      console.log("Server Stop");
+      process.exit();
+    }
   });
 }
 
