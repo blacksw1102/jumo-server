@@ -1,9 +1,9 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import DB from "./DB";
+import User from "./User";
 
 const LocalStrategy = passportLocal.Strategy;
-
 export default class Passport {
   constructor(passport: passport.PassportStatic) {
     /* 로그인 세션 */
@@ -59,16 +59,20 @@ export default class Passport {
       passwordField: 'pw',
       passReqToCallback: true
     }, (req, username, password, done) => {
-      DB.getPool().getConnection((err, conn) => {
-        conn.query('INSERT INTO user VALUES (?, ?, ?, ?, null, 0);', [username, password, req.body.name, req.body.tel], (err, data) => {
-          if (err) {
-            console.log(err);
-            return done(null, false, { message: 'Duplicated ID' });
-          } else {
-            return done(null, username);
-          }
-        });
-      });
+      User.cryptPassword(password).then((cryptResult) => {
+        {
+          DB.getPool().getConnection((err, conn) => {
+            conn.query('INSERT INTO user (id, name, pw, salt, tel) VALUES (?, ?, ?, ?, ?);', [username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel], (err, data) => {
+              if (err) {
+                console.log(err);
+                return done(null, false, { message: 'Duplicated ID' });
+              } else {
+                return done(null, username);
+              }
+            });
+          });
+        }
+      })
     }));
   }
 }
