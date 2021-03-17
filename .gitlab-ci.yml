@@ -9,12 +9,14 @@ cache:
     - ./node_modules
     - ./*.js
 
+before_script:
+  - npm i
+
 dev-build:
   stage: build
   only:
   # - develop
   script:
-    - npm i
     - npm run build
   tags:
     - test-dev-run
