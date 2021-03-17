@@ -34,20 +34,36 @@ export default class Passport {
               console.log(err);
             }
             conn.query(
-              "SELECT * FROM user WHERE user_id=? AND pw=?",
-              [username, password],
+              "SELECT * FROM user WHERE id=?",
+              [username],
               (err, data) => {
-                console.log(data);
                 if (err) {
+                  console.log(`[Failed] ${username} : DataBase Error`);
+                  conn.release();
                   return done(err);
                 }
-                if (!data) {
-                  return done(null, false, { message: "undefined" });
+                if (data.length === 0) {
+                  console.log(`[Failed] ${username} : Wrong Id`);
+                  conn.release();
+                  return done(null, false, { message: "Wrong Id" });
                 }
-                return done(null, data.user_id);
+                let pw = data[0].pw;
+                let salt = data[0].salt;
+                conn.release();
+
+                User.comparePassword(password, pw, salt)
+                  .then((result) => {
+                    if (result) {
+                      console.log(`[Succeed] ${username} Sign in`);
+                      return done(null, data.id);
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(`[Failed] ${username} : Wrong Password`);
+                    return done(null, false, { message: "Wrong password" });
+                  });
               }
             );
-            conn.end();
           });
         }
       )
