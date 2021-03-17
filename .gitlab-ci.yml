@@ -6,18 +6,15 @@ stages:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - ./node_modules
-    - ./*.js
-
-before_script:
-  - npm i
+    - ./npm 
 
 dev-build:
   stage: build
   only:
   # - develop
   script:
-    - npm run build
+    - call npm i
+    - call npm run build
   tags:
     - test-dev-run
 
