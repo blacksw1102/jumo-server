@@ -8,8 +8,8 @@ dev-build:
   only:
   # - develop
   script:
-    - call npm i
-    - call npm run build
+    - npm i
+    - npm run build
   tags:
     - test-dev-run
   cache:
