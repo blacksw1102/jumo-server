@@ -3,11 +3,6 @@ stages:
   - build
   - run-server
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - ./npm 
-
 dev-build:
   stage: build
   only:
@@ -17,6 +12,11 @@ dev-build:
     - call npm run build
   tags:
     - test-dev-run
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .node_modules/
+      - \*.js
 
 dev-start-test:
   stage: run-server
