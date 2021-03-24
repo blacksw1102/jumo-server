@@ -25,10 +25,11 @@ export default class Passport {
     passport.use(
       new LocalStrategy(
         {
-          usernameField: "id",
-          passwordField: "pw",
+          usernameField : "id",
+          passwordField : "pw",
+          passReqToCallback : true
         },
-        (username, password, done) => {
+        (req, username, password, done) => {
           DB.getPool().getConnection((err, conn) => {
             if (err) {
               console.log(err);
@@ -71,9 +72,9 @@ export default class Passport {
 
     /* 회원가입 */
     passport.use('local-signup', new LocalStrategy({
-      usernameField: 'id',
-      passwordField: 'pw',
-      passReqToCallback: true
+      usernameField : 'id',
+      passwordField : 'pw',
+      passReqToCallback : true
     }, (req, username, password, done) => {
       User.cryptPassword(password).then((cryptResult) => {
         {
