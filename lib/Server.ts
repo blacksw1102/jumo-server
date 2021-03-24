@@ -4,6 +4,7 @@ import passport from "passport";
 import * as mysqlSession from 'express-mysql-session';
 import * as session from 'express-session';
 import config from "./Config";
+import flash from "connect-flash";
 
 import AuthRouter from "./router/Auth";
 import SearchRouter from "./router/Search";
@@ -37,6 +38,7 @@ export default class Server {
     );
 
     // passport
+    this.app.use(flash());
     this.app.use(passport.initialize());
     this.app.use(passport.session());
   }

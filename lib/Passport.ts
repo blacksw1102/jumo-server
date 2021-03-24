@@ -1,9 +1,9 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import DB from "./DB";
+import User from "./User";
 
 const LocalStrategy = passportLocal.Strategy;
-
 export default class Passport {
   constructor(passport: passport.PassportStatic) {
     /* 로그인 세션 */
@@ -15,7 +15,7 @@ export default class Passport {
     passport.deserializeUser((id, done) => {
       console.log('DeserializeUser - ', id);
       DB.getPool().getConnection((err, conn) => {
-        conn.query('SELECT * FROM user WHERE user_id = ?', [id], (err, data) => {
+        conn.query('SELECT * FROM user WHERE id = ?', [id], (err, data) => {
           done(null, data);
         });
       });
@@ -25,29 +25,46 @@ export default class Passport {
     passport.use(
       new LocalStrategy(
         {
-          usernameField: "id",
-          passwordField: "pw",
+          usernameField : "id",
+          passwordField : "pw",
+          passReqToCallback : true
         },
-        (username, password, done) => {
+        (req, username, password, done) => {
           DB.getPool().getConnection((err, conn) => {
             if (err) {
               console.log(err);
             }
             conn.query(
-              "SELECT * FROM user WHERE user_id=? AND pw=?",
-              [username, password],
+              "SELECT * FROM user WHERE id=?",
+              [username],
               (err, data) => {
-                console.log(data);
                 if (err) {
+                  console.log(`[Failed] ${username} : DataBase Error`);
+                  conn.release();
                   return done(err);
                 }
-                if (!data) {
-                  return done(null, false, { message: "undefined" });
+                if (data.length === 0) {
+                  console.log(`[Failed] ${username} : Wrong Id`);
+                  conn.release();
+                  return done(null, false, { message: "Wrong Id" });
                 }
-                return done(null, data.user_id);
+                let pw = data[0].pw;
+                let salt = data[0].salt;
+                conn.release();
+
+                User.comparePassword(password, pw, salt)
+                  .then((result) => {
+                    if (result) {
+                      console.log(`[Succeed] ${username} Sign in`);
+                      return done(null, data.id);
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(`[Failed] ${username} : Wrong Password`);
+                    return done(null, false, { message: "Wrong password" });
+                  });
               }
             );
-            conn.end();
           });
         }
       )
@@ -55,20 +72,24 @@ export default class Passport {
 
     /* 회원가입 */
     passport.use('local-signup', new LocalStrategy({
-      usernameField: 'id',
-      passwordField: 'pw',
-      passReqToCallback: true
+      usernameField : 'id',
+      passwordField : 'pw',
+      passReqToCallback : true
     }, (req, username, password, done) => {
-      DB.getPool().getConnection((err, conn) => {
-        conn.query('INSERT INTO user VALUES (?, ?, ?, ?, null, 0);', [username, password, req.body.name, req.body.tel], (err, data) => {
-          if (err) {
-            console.log(err);
-            return done(null, false, { message: 'Duplicated ID' });
-          } else {
-            return done(null, username);
-          }
-        });
-      });
+      User.cryptPassword(password).then((cryptResult) => {
+        {
+          DB.getPool().getConnection((err, conn) => {
+            conn.query('INSERT INTO user (id, name, pw, salt, tel) VALUES (?, ?, ?, ?, ?);', [username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel], (err, data) => {
+              if (err) {
+                console.log(err);
+                return done(null, false, { message: 'Duplicated ID' });
+              } else {
+                return done(null, username);
+              }
+            });
+          });
+        }
+      })
     }));
   }
 }
