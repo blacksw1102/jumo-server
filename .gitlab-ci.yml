@@ -3,21 +3,32 @@ stages:
   - build
   - run-server
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .node_modules/
+
 dev-build:
   stage: build
-  only:
-  - develop
+  # only:
+  # - develop
   script:
     - npm i
     - npm run build
   tags:
     - test-dev-run
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .node_modules/
+      - \*.js
+
 dev-start-test:
   stage: run-server
   script:
     - npm i
     - npm run build
-    - cp ~/config.json ./config/config.json
+    - echo  $SERVER_CONFIG > ./config/config.json
     - export EXIT_ON_SUCCESS=1
     - npm run start
   tags:
