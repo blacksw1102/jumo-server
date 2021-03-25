@@ -29,7 +29,7 @@ dev-start-test:
   script:
     - npm i
     - npm run build
-    - echo  $SERVER_CONFIG > ./config/config.json
+    - echo  $SERVER_CONFIG | base64 -d > ./config/config.json
     - export EXIT_ON_SUCCESS=1
     - npm run start
   tags:
