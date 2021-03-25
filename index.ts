@@ -4,6 +4,8 @@ import DB from "./lib/DB";
 import Passport from "./lib/Passport";
 import passport from "passport";
 
+import User from "./lib/User";
+
 async function main() {
   await Config.load();
   await DB.createPool();
@@ -17,7 +19,7 @@ async function main() {
     console.log("Server Start");
     console.log(`Port : ${serverPort}`);
 
-    if(process.env.EXIT_ON_SUCCESS) {
+    if (process.env.EXIT_ON_SUCCESS) {
       console.log("Server Stop");
       process.exit();
     }
