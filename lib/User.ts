@@ -1,9 +1,27 @@
 import crypto from "crypto";
 import { resolve } from "node:path";
 
-export default class User {
-    constructor() {
+import DB from "./DB";
 
+export default class User {
+    id: string;
+    name: string;
+    pw: string;
+    salt: string;
+    tel: number;
+    profile_image: number;
+    point: number;
+    usercol: number;
+
+    constructor() {
+        this.id = "";
+        this.name = "";
+        this.pw = "";
+        this.slat = "";
+        this.tel = 0;
+        this.profile_image = 0;
+        this.point = 0;
+        this.usercol = 0
     }
 
     static cryptPassword(password: string) {
@@ -23,6 +41,20 @@ export default class User {
                     resolve(true);
                 else
                     reject();
+            });
+        });
+    }
+
+    static getUserById(userId: string): Promise<User> {
+        return new Promise((resolve, reject) => {
+            DB.getPool().getConnection((err, conn) => {
+                if (err) {
+                    console.log("DB Connection ERROR");
+                    reject();
+                }
+                conn.query("SELECT * FROM user WHERE id=?", [userId], (err, data) => {
+
+                });
             });
         });
     }
