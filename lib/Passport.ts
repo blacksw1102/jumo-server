@@ -1,9 +1,13 @@
 import passport from "passport";
 import passportLocal from "passport-local";
+import passportJwt from "passport-jwt";
 import DB from "./DB";
 import User from "./User";
 
 const LocalStrategy = passportLocal.Strategy;
+const JwtStrategy = passportJwt.Strategy;
+const ExtractJwt = passportJwt.ExtractJwt;
+
 export default class Passport {
   constructor(passport: passport.PassportStatic) {
     /* 로그인 세션 */
@@ -25,9 +29,9 @@ export default class Passport {
     passport.use(
       new LocalStrategy(
         {
-          usernameField : "id",
-          passwordField : "pw",
-          passReqToCallback : true
+          usernameField: "id",
+          passwordField: "pw",
+          passReqToCallback: true
         },
         (req, username, password, done) => {
           DB.getPool().getConnection((err, conn) => {
@@ -72,9 +76,9 @@ export default class Passport {
 
     /* 회원가입 */
     passport.use('local-signup', new LocalStrategy({
-      usernameField : 'id',
-      passwordField : 'pw',
-      passReqToCallback : true
+      usernameField: 'id',
+      passwordField: 'pw',
+      passReqToCallback: true
     }, (req, username, password, done) => {
       User.cryptPassword(password).then((cryptResult) => {
         {
