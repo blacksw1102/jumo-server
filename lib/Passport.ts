@@ -12,7 +12,7 @@ export default class Passport {
       done(null, user);
     });
 
-    passport.deserializeUser((id, done) => {
+    passport.deserializeUser((id: string, done) => {
       console.log('DeserializeUser - ', id);
       User.getUserById(id).then((data) => {
         done(null, data);

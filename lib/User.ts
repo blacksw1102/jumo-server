@@ -67,4 +67,8 @@ export default class User {
             });
         });
     }
+
+    signUp() {
+
+    }
 }
