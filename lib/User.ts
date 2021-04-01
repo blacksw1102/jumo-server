@@ -17,7 +17,7 @@ export default class User {
         this.id = "";
         this.name = "";
         this.pw = "";
-        this.slat = "";
+        this.salt = "";
         this.tel = 0;
         this.profile_image = 0;
         this.point = 0;
@@ -53,7 +53,18 @@ export default class User {
                     reject();
                 }
                 conn.query("SELECT * FROM user WHERE id=?", [userId], (err, data) => {
+                    if (err) {
+                        console.log(`[Failed] ${userId} : DataBase Error`);
+                        conn.release();
+                    }
+                    if (data.length === 0) {
+                        console.log(`[Failed] ${userId} : Wrong Id`);
+                        conn.release();
+                    }
 
+                    resolve(data[0])
+
+                    conn.release();
                 });
             });
         });
