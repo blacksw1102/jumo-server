@@ -53,18 +53,16 @@ export default class User {
                     reject();
                 }
                 conn.query("SELECT * FROM user WHERE id=?", [userId], (err, data) => {
+                    let user = data[0]
+                    conn.release();
+
                     if (err) {
                         console.log(`[Failed] ${userId} : DataBase Error`);
-                        conn.release();
                     }
-                    if (data.length === 0) {
+                    if (!user) {
                         console.log(`[Failed] ${userId} : Wrong Id`);
-                        conn.release();
                     }
-
-                    resolve(data[0])
-
-                    conn.release();
+                    resolve(user);
                 });
             });
         });
