@@ -25,56 +25,32 @@ export default class Passport {
     passport.use(
       new LocalStrategy(
         {
-          usernameField : "id",
-          passwordField : "pw",
-          passReqToCallback : true
+          usernameField: "id",
+          passwordField: "pw",
+          passReqToCallback: true
         },
         (req, username, password, done) => {
-          DB.getPool().getConnection((err, conn) => {
-            if (err) {
-              console.log(err);
-            }
-            conn.query(
-              "SELECT * FROM user WHERE id=?",
-              [username],
-              (err, data) => {
-                if (err) {
-                  console.log(`[Failed] ${username} : DataBase Error`);
-                  conn.release();
-                  return done(err);
+          User.getUserById(username).then((user) => {
+            User.comparePassword(password, user.pw, user.salt)
+              .then((result) => {
+                if (result) {
+                  console.log(`[Succeed] ${username} Sign in`);
+                  return done(null, user.id);
                 }
-                if (data.length === 0) {
-                  console.log(`[Failed] ${username} : Wrong Id`);
-                  conn.release();
-                  return done(null, false, { message: "Wrong Id" });
-                }
-                let pw = data[0].pw;
-                let salt = data[0].salt;
-                conn.release();
-
-                User.comparePassword(password, pw, salt)
-                  .then((result) => {
-                    if (result) {
-                      console.log(`[Succeed] ${username} Sign in`);
-                      return done(null, data.id);
-                    }
-                  })
-                  .catch((err) => {
-                    console.log(`[Failed] ${username} : Wrong Password`);
-                    return done(null, false, { message: "Wrong password" });
-                  });
-              }
-            );
+              })
+              .catch((err) => {
+                console.log(`[Failed] ${username} : Wrong Password`);
+                return done(null, false, { message: "Wrong password" });
+              });;
           });
         }
       )
     );
-
     /* 회원가입 */
     passport.use('local-signup', new LocalStrategy({
-      usernameField : 'id',
-      passwordField : 'pw',
-      passReqToCallback : true
+      usernameField: 'id',
+      passwordField: 'pw',
+      passReqToCallback: true
     }, (req, username, password, done) => {
       User.cryptPassword(password).then((cryptResult) => {
         {
