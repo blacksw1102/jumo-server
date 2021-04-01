@@ -14,10 +14,8 @@ export default class Passport {
 
     passport.deserializeUser((id, done) => {
       console.log('DeserializeUser - ', id);
-      DB.getPool().getConnection((err, conn) => {
-        conn.query('SELECT * FROM user WHERE id = ?', [id], (err, data) => {
-          done(null, data);
-        });
+      User.getUserById(id).then((data) => {
+        done(null, data);
       });
     });
 
