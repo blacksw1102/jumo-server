@@ -1,5 +1,6 @@
 import express from "express";
 import Restaurant from "../Restaurant";
+import RestaurantDAO from "../daoImpl/RestaurantDAOImpl";
 
 export default class SearchRouter {
   private Router: express.Router;
@@ -9,7 +10,7 @@ export default class SearchRouter {
 
     /* 검색 */
     this.Router.post("/search", (req, res) => {
-      Restaurant.getSearchResult(req.body.keyword).then((result) => {
+      RestaurantDAO.getSearchResult(req.body.keyword).then((result) => {
         res.json(result);
       });
     });
