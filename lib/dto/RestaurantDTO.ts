@@ -1,4 +1,4 @@
-export class RestaurantSearchResult {
+export class RestaurantSearchResultDTO {
     name: string;
     score: number;
     image: string;
