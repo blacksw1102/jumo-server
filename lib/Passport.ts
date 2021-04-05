@@ -3,6 +3,7 @@ import passportLocal from "passport-local";
 import DB from "./DB";
 import UserDAO from "./daoImpl/UserDAOImpl";
 import User from "./User";
+import { UserDTO } from "./dto/UserDTO";
 
 const LocalStrategy = passportLocal.Strategy;
 export default class Passport {
@@ -53,16 +54,13 @@ export default class Passport {
     }, (req, username, password, done) => {
       User.cryptPassword(password).then((cryptResult) => {
         {
-          DB.getPool().getConnection((err, conn) => {
-            conn.query('INSERT INTO user (id, name, pw, salt, tel) VALUES (?, ?, ?, ?, ?);', [username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel], (err, data) => {
-              if (err) {
-                console.log(err);
-                return done(null, false, { message: 'Duplicated ID' });
-              } else {
-                return done(null, username);
-              }
+          UserDAO.insert(new UserDTO(username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel, "", 0, 0))
+            .then(id => {
+              return done(null, id);
+            })
+            .catch(err => {
+              return done(null, false, { message: "Duplicaed ID" });
             });
-          });
         }
       })
     }));

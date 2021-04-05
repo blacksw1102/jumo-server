@@ -1,6 +1,6 @@
-import { User } from "../dto/UserDTO";
+import { UserDTO } from "../dto/UserDTO";
 
 export default interface UserDAO {
-    getUserById(userId: string): Promise<User>;
-    insert(user: User): Promise<void>;
+    getUserById(userId: string): Promise<UserDTO>;
+    insert(user: UserDTO): Promise<string>;
 }

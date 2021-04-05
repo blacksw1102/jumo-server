@@ -28,7 +28,7 @@ class UserDAOImpl implements UserDAO {
     });
   }
 
-  insert(user: UserDTO): Promise<void> {
+  insert(user: UserDTO): Promise<string> {
     return new Promise((resolve, reject) => {
       DB.getPool().getConnection((err, conn) => {
         if (err) {
@@ -39,11 +39,10 @@ class UserDAOImpl implements UserDAO {
           [user.id, user.name, user.pw, user.salt, user.tel],
           (err, data) => {
             if (err) {
-              console.log("...");
+              reject();
             }
+            resolve(user.id);
           });
-
-        resolve();
       });
     });
   }
