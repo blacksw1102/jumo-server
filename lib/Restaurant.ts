@@ -8,7 +8,6 @@ interface RestaurantSearchResault {
   average_cooking_time: string,
   review_count: number
 }
-
 export default class Restaurant {
   constructor() { }
 

@@ -1,6 +1,7 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import DB from "./DB";
+import UserDAO from "./daoImpl/UserDAOImpl";
 import User from "./User";
 
 const LocalStrategy = passportLocal.Strategy;
@@ -14,7 +15,7 @@ export default class Passport {
 
     passport.deserializeUser((id: string, done) => {
       console.log('DeserializeUser - ', id);
-      User.getUserById(id).then((data) => {
+      UserDAO.getUserById(id).then((data) => {
         done(null, data);
       });
     });
@@ -28,7 +29,7 @@ export default class Passport {
           passReqToCallback: true
         },
         (req, username, password, done) => {
-          User.getUserById(username).then((user) => {
+          UserDAO.getUserById(username).then((user) => {
             User.comparePassword(password, user.pw, user.salt)
               .then((result) => {
                 if (result) {

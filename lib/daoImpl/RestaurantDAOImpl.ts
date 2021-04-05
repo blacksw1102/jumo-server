@@ -1,5 +1,5 @@
 import RestaurantDAO from "../dao/RestaurantDAO";
-import RestaurantModel from "../models/RestaurantModel";
+import { RestaurantSearchResult } from "../dto/RestaurantDTO";
 
 import DB from "../DB";
 
@@ -41,7 +41,7 @@ class RestaurantDAOImpl implements RestaurantDAO {
     });
   }
 
-  getSearchResult(keyword: string): Promise<any[]> {
+  getSearchResult(keyword: string): Promise<RestaurantSearchResult[]> {
     return new Promise((resolve, reject) => {
       DB.getPool().getConnection((err, conn) => {
         // DB 에러 처리
@@ -58,14 +58,9 @@ class RestaurantDAOImpl implements RestaurantDAO {
             }
 
             let result = data.map((item: any) => {
-              return {
-                name: item.restaurant_name,
-                score: item.restaurant_score,
-                image: item.restaurant_image,
-                description: item.restaurant_description,
-                average_cooking_time: item.average_cooking_time,
-                review_count: item.review_count,
-              };
+              return new RestaurantSearchResult(
+                item.restaurant_name, item.restaurant_score, item.restaurant_image, item.restaurant_description, item.average_cooking_time, item.review_count
+              );
             });
 
             // 확인용 로그
