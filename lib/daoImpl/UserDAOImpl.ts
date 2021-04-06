@@ -2,7 +2,6 @@ import UserDAO from "../dao/UserDAO";
 import { UserDTO } from "../dto/UserDTO";
 
 import DB from "../DB";
-import { rejects } from "node:assert";
 
 class UserDAOImpl implements UserDAO {
   getUserById(userId: string): Promise<UserDTO> {
