@@ -1,7 +1,7 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import DB from "./DB";
-import UserDAO from "./daoImpl/UserDAOImpl";
+import UserDAO from "./dao/UserDAO";
 import User from "./User";
 import { UserDTO } from "./dto/UserDTO";
 
