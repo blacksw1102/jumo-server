@@ -49,6 +49,27 @@ export default class Passport {
         }
       )
     );
+
+    /* jwt Strategy */
+    passport.use(new JwtStrategy(
+      {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: "secret"
+      },
+      (payload, done) => {
+        UserDAO.getUserById(payload.id).then(
+          data => {
+            console.log(payload.id);
+            if(!data) {
+              return done(null, false);
+            }
+
+            return done(null, data);
+          }
+        );
+      }
+    ));
+
     /* 회원가입 */
     passport.use('local-signup', new LocalStrategy({
       usernameField: 'id',
