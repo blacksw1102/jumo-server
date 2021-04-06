@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
+import Config from "../Config";
 
 export default class AuthRouter {
     private Router: express.Router;

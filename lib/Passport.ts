@@ -1,10 +1,10 @@
 import passport from "passport";
 import passportLocal from "passport-local";
 import passportJwt from "passport-jwt";
-import DB from "./DB";
 import UserDAO from "./dao/UserDAO";
 import User from "./User";
 import { UserDTO } from "./dto/UserDTO";
+import Config from "./Config";
 
 const LocalStrategy = passportLocal.Strategy;
 const JwtStrategy = passportJwt.Strategy;
@@ -51,24 +51,24 @@ export default class Passport {
     );
 
     /* jwt Strategy */
-    passport.use(new JwtStrategy(
-      {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: "secret"
-      },
-      (payload, done) => {
-        UserDAO.getUserById(payload.id).then(
-          data => {
+    passport.use(
+      new JwtStrategy(
+        {
+          jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+          secretOrKey: Config.getInstance().server.jwtSecret,
+        },
+        (payload, done) => {
+          UserDAO.getUserById(payload.id).then((data) => {
             console.log(payload.id);
-            if(!data) {
+            if (!data) {
               return done(null, false);
             }
 
             return done(null, data);
-          }
-        );
-      }
-    ));
+          });
+        }
+      )
+    );
 
     /* 회원가입 */
     passport.use('local-signup', new LocalStrategy({
