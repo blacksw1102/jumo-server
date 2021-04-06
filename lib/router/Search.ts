@@ -1,6 +1,6 @@
 import express from "express";
 import Restaurant from "../Restaurant";
-import RestaurantDAO from "../daoImpl/RestaurantDAOImpl";
+import RestaurantDAO from "../dao/RestaurantDAO";
 
 export default class SearchRouter {
   private Router: express.Router;
