@@ -2,7 +2,9 @@ import passport from "passport";
 import passportLocal from "passport-local";
 import passportJwt from "passport-jwt";
 import DB from "./DB";
+import UserDAO from "./dao/UserDAO";
 import User from "./User";
+import { UserDTO } from "./dto/UserDTO";
 
 const LocalStrategy = passportLocal.Strategy;
 const JwtStrategy = passportJwt.Strategy;
@@ -18,7 +20,7 @@ export default class Passport {
 
     passport.deserializeUser((id: string, done) => {
       console.log('DeserializeUser - ', id);
-      User.getUserById(id).then((data) => {
+      UserDAO.getUserById(id).then((data) => {
         done(null, data);
       });
     });
@@ -32,7 +34,7 @@ export default class Passport {
           passReqToCallback: true
         },
         (req, username, password, done) => {
-          User.getUserById(username).then((user) => {
+          UserDAO.getUserById(username).then((user) => {
             User.comparePassword(password, user.pw, user.salt)
               .then((result) => {
                 if (result) {
@@ -56,16 +58,13 @@ export default class Passport {
     }, (req, username, password, done) => {
       User.cryptPassword(password).then((cryptResult) => {
         {
-          DB.getPool().getConnection((err, conn) => {
-            conn.query('INSERT INTO user (id, name, pw, salt, tel) VALUES (?, ?, ?, ?, ?);', [username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel], (err, data) => {
-              if (err) {
-                console.log(err);
-                return done(null, false, { message: 'Duplicated ID' });
-              } else {
-                return done(null, username);
-              }
+          UserDAO.insert(new UserDTO(username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel, "", 0, 0))
+            .then(id => {
+              return done(null, id);
+            })
+            .catch(err => {
+              return done(null, false, { message: "Duplicaed ID" });
             });
-          });
         }
       })
     }));
