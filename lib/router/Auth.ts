@@ -1,5 +1,6 @@
 import express from "express";
 import passport from "passport";
+import jwt from "jsonwebtoken";
 
 export default class AuthRouter {
     private Router: express.Router;
@@ -10,6 +11,23 @@ export default class AuthRouter {
         /* 로그인 영역 */
         this.Router.get("/", (req, res) => {
             res.end('/');
+        });
+
+        this.Router.post("/signin", (req, res, next) => {
+            passport.authenticate("local", { session: false}, (err, user) => {
+                if(err || !user) {
+                    return res.status(400).end();
+                }
+
+                req.login(user, { session: false}, (err) => {
+                    if(err) {
+                        next(err);
+                    }
+
+                    const token = jwt.sign({ id: user.id }, "secret", { expiresIn: "30m"});
+                    return res.status(200).json({token});
+                });
+            })(req, res);
         });
 
         /* 로그인 요청 */

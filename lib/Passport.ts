@@ -21,7 +21,7 @@ export default class Passport {
     passport.deserializeUser((id: string, done) => {
       console.log('DeserializeUser - ', id);
       UserDAO.getUserById(id).then((data) => {
-        done(null, data);
+        done(null, data.id);
       });
     });
 
@@ -31,9 +31,8 @@ export default class Passport {
         {
           usernameField: "id",
           passwordField: "pw",
-          passReqToCallback: true
         },
-        (req, username, password, done) => {
+        (username, password, done) => {
           UserDAO.getUserById(username).then((user) => {
             User.comparePassword(password, user.pw, user.salt)
               .then((result) => {
@@ -45,7 +44,7 @@ export default class Passport {
               .catch((err) => {
                 console.log(`[Failed] ${username} : Wrong Password`);
                 return done(null, false, { message: "Wrong password" });
-              });;
+              });
           });
         }
       )
