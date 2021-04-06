@@ -1,4 +1,4 @@
-import { RestaurantSearchResult } from "../dto/RestaurantDTO";
+import { RestaurantSearchResultDTO } from "../dto/RestaurantDTO";
 
 export default interface RestaurantDAO {
   create(
@@ -7,5 +7,5 @@ export default interface RestaurantDAO {
     description: string,
     categoryId: number
   ): Promise<void>;
-  getSearchResult(keyword: string): Promise<RestaurantSearchResult[]>;
+  getSearchResult(keyword: string): Promise<RestaurantSearchResultDTO[]>;
 }
