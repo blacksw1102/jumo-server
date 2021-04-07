@@ -4,7 +4,7 @@ import path from "path";
 export interface ServerConfig {
   port: number,
   jwtAccessTokenSecret: string,
-  jwtAccessToeknExpire: string,
+  jwtAccessTokenExpire: string
   jwtRefreshTokenSecret: string,
   jwtRefreshTokenExpire: string
 }
@@ -25,7 +25,7 @@ export default class Config {
     this.server = {
       port: 8080,
       jwtAccessTokenSecret: "secret",
-      jwtAccessToeknExpire: "30m"
+      jwtAccessTokenExpire: "30m"
     };
   }
 
