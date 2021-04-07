@@ -24,18 +24,18 @@ export default class Server {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
 
-    // session-store
-    const MySQLStore = mysqlSession.default(session);
+    // // session-store
+    // const MySQLStore = mysqlSession.default(session);
 
-    // session
-    this.app.use(
-      session.default({
-        resave: false,
-        saveUninitialized: false,
-        secret: "fadsfadssadf",
-        store: new MySQLStore(config.getInstance().db)
-      })
-    );
+    // // session
+    // this.app.use(
+    //   session.default({
+    //     resave: false,
+    //     saveUninitialized: false,
+    //     secret: "fadsfadssadf",
+    //     store: new MySQLStore(config.getInstance().db)
+    //   })
+    // );
 
     // passport
     this.app.use(flash());

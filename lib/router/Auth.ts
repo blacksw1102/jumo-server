@@ -24,9 +24,9 @@ export default class AuthRouter {
                     if (err) {
                         next(err);
                     }
-
-                    const token = jwt.sign({ id: user }, Config.getInstance().server.jwtAccessTokenSecret, { expiresIn: Config.getInstance().server.jwtAccessToeknExpire });
-                    return res.status(200).json({ token });
+                    const accessToken = jwt.sign({ id: user }, Config.getInstance().server.jwtAccessTokenSecret, { expiresIn: Config.getInstance().server.jwtAccessTokenExpire });
+                    const refreshToken = jwt.sign({ id: user }, Config.getInstance().server.jwtRefreshTokenSecret, { expiresIn: Config.getInstance().server.jwtRefreshTokenExpire });
+                    return res.status(200).json({ accessToken, refreshToken });
                 });
             })(req, res);
         });

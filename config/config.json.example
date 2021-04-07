@@ -1,7 +1,10 @@
 {
     "server": {
         "port":8080,
-        "jwtSecret":""
+        "jwtAccessTokenSecret": "JWT_ACCESS_TOKEN_SECRET",
+        "jwtAccessTokenExpire": "30m",
+        "jwtRefreshTokenSecret": "JWT_REFRESH_TOKEN_SECRET",
+        "jwtRefreshTokenExpire": "14d"
     },
     "db":{
         "host":"",

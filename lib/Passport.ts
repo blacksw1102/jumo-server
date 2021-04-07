@@ -43,6 +43,7 @@ export default class Passport {
               })
               .catch((err) => {
                 console.log(`[Failed] ${username} : Wrong Password`);
+                console.log(err);
                 return done(null, false, { message: "Wrong password" });
               });
           });
@@ -55,7 +56,7 @@ export default class Passport {
       new JwtStrategy(
         {
           jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-          secretOrKey: Config.getInstance().server.jwtSecret,
+          secretOrKey: Config.getInstance().server.jwtAccessTokenSecret,
         },
         (payload, done) => {
           return done(null, payload.id)
