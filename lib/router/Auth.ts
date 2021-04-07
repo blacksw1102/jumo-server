@@ -14,6 +14,9 @@ export default class AuthRouter {
             res.end('/');
         });
 
+        /**
+         * 로그인
+         */
         this.Router.post("/signin", (req, res, next) => {
             passport.authenticate("local", { session: false }, (err, user) => {
                 if (err || !user) {
@@ -28,6 +31,16 @@ export default class AuthRouter {
                     const refreshToken = jwt.sign({ id: user }, Config.getInstance().server.jwtRefreshTokenSecret, { expiresIn: Config.getInstance().server.jwtRefreshTokenExpire });
                     return res.status(200).json({ accessToken, refreshToken });
                 });
+            })(req, res);
+        });
+
+        /**
+         * Access Token 재발급
+         */
+        this.Router.post("/refresh", (req, res, next) => {
+            passport.authenticate("refresh-jwt", { session: false }, (err, user) => {
+                const accessToken = jwt.sign({ id: user }, Config.getInstance().server.jwtAccessTokenSecret, { expiresIn: Config.getInstance().server.jwtAccessTokenExpire });
+                res.status(200).json({ accessToken });
             })(req, res);
         });
 

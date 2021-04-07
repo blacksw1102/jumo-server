@@ -51,6 +51,17 @@ export default class Passport {
       )
     );
 
+    passport.use(
+      "refresh-jwt",
+      new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: Config.getInstance().server.jwtRefreshTokenSecret,
+      },
+        (payload, done) => {
+          return done(null, payload.id);
+        }
+      ));
+
     /* jwt Strategy */
     passport.use(
       new JwtStrategy(
@@ -59,7 +70,7 @@ export default class Passport {
           secretOrKey: Config.getInstance().server.jwtAccessTokenSecret,
         },
         (payload, done) => {
-          return done(null, payload.id)
+          return done(null, payload.id);
           // UserDAO.getUserById(payload.id).then((data) => {
           //   console.log(payload.id);
           //   if (!data) {
