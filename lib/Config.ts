@@ -4,7 +4,9 @@ import path from "path";
 export interface ServerConfig {
   port: number,
   jwtAccessTokenSecret: string,
-  jwtAccessToeknExpire: string
+  jwtAccessToeknExpire: string,
+  jwtRefreshTokenSecret: string,
+  jwtRefreshTokenExpire: string
 }
 export default class Config {
   public static CONFIG_PATH = path.join(
