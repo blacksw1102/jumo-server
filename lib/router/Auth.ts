@@ -15,18 +15,18 @@ export default class AuthRouter {
         });
 
         this.Router.post("/signin", (req, res, next) => {
-            passport.authenticate("local", { session: false}, (err, user) => {
-                if(err || !user) {
+            passport.authenticate("local", { session: false }, (err, user) => {
+                if (err || !user) {
                     return res.status(400).end();
                 }
 
-                req.login(user, { session: false}, (err) => {
-                    if(err) {
+                req.login(user, { session: false }, (err) => {
+                    if (err) {
                         next(err);
                     }
 
-                    const token = jwt.sign({ id: user }, "secret", { expiresIn: "30m"});
-                    return res.status(200).json({token});
+                    const token = jwt.sign({ id: user }, Config.getInstance().server.jwtSecret, { expiresIn: "30m" });
+                    return res.status(200).json({ token });
                 });
             })(req, res);
         });
@@ -40,7 +40,7 @@ export default class AuthRouter {
 
         /* 회원가입 폼 (테스트용 샘플) */
         this.Router.get("/signup", (req, res) => {
-            let html:string = `
+            let html: string = `
                 <!doctype html>
                 <html>
                 <head>
