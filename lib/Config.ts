@@ -3,7 +3,8 @@ import fs from "fs";
 import path from "path";
 export interface ServerConfig {
   port: number,
-  jwtSecret: string
+  jwtAccessTokenSecret: string,
+  jwtAccessToeknExpire: string
 }
 export default class Config {
   public static CONFIG_PATH = path.join(
@@ -21,7 +22,8 @@ export default class Config {
     this.db = {};
     this.server = {
       port: 8080,
-      jwtSecret: ""
+      jwtAccessTokenSecret: "secret",
+      jwtAccessToeknExpire: "30m"
     };
   }
 
