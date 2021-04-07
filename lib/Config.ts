@@ -25,7 +25,9 @@ export default class Config {
     this.server = {
       port: 8080,
       jwtAccessTokenSecret: "secret",
-      jwtAccessTokenExpire: "30m"
+      jwtAccessTokenExpire: "30m",
+      jwtRefreshTokenSecret: "secrret",
+      jwtRefreshTokenExpire: "14d"
     };
   }
 
