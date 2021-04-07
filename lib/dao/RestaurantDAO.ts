@@ -57,10 +57,6 @@ class RestaurantDAO {
               resolve([]);
             }
 
-            if (!data) {
-              resolve([]);
-            }
-
             let result = data.map((item: any) => {
               return new RestaurantSearchResultDTO(
                 item.restaurant_name, item.restaurant_score, item.restaurant_image, item.restaurant_description, item.average_cooking_time, item.review_count
