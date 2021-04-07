@@ -49,7 +49,7 @@ class RestaurantDAO {
         }
 
         conn.query(
-          "SELECT *, COUNT(*) as review_count FROM restaurant join review WHERE restaurant_name LIKE ?",
+          "SELECT *, COUNT(*) as review_count FROM restaurant join review WHERE name LIKE ?",
           [`%${keyword}%`],
           (err, data) => {
             if (err) {
