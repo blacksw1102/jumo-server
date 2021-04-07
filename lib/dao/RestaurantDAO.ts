@@ -54,6 +54,11 @@ class RestaurantDAO {
           (err, data) => {
             if (err) {
               console.log(err);
+              resolve([]);
+            }
+
+            if (!data) {
+              resolve([]);
             }
 
             let result = data.map((item: any) => {
