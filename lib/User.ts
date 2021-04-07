@@ -1,5 +1,4 @@
 import crypto from "crypto";
-import { resolve } from "node:path";
 
 import DB from "./DB";
 
@@ -44,7 +43,7 @@ export default class User {
             });
         });
     }
-    
+
     signUp() {
 
     }
