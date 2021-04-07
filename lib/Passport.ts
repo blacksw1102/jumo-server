@@ -58,14 +58,15 @@ export default class Passport {
           secretOrKey: Config.getInstance().server.jwtSecret,
         },
         (payload, done) => {
-          UserDAO.getUserById(payload.id).then((data) => {
-            console.log(payload.id);
-            if (!data) {
-              return done(null, false);
-            }
+          return done(null, payload.id)
+          // UserDAO.getUserById(payload.id).then((data) => {
+          //   console.log(payload.id);
+          //   if (!data) {
+          //     return done(null, false);
+          //   }
 
-            return done(null, data);
-          });
+          //   return done(null, data);
+          // });
         }
       )
     );

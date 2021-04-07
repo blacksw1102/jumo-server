@@ -14,8 +14,8 @@ export default class AuthRouter {
     });
 
     /* 테스트 요청 */
-    this.Router.post("/test", passport.authenticate("jwt", {session: false}), (req, res) => {
-      res.status(200).json({data: "Test"});
+    this.Router.post("/test", passport.authenticate("jwt", { session: false }), (req, res) => {
+      res.status(200).json({ data: "Test", id: req.user });
     });
   }
 
