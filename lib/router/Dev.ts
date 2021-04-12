@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 
 export default class AuthRouter {
   private Router: express.Router;
@@ -10,6 +11,11 @@ export default class AuthRouter {
     this.Router.get("/quit", (req, res) => {
       res.end("Server Closed");
       process.exit();
+    });
+
+    /* 테스트 요청 */
+    this.Router.post("/test", passport.authenticate("jwt", { session: false }), (req, res) => {
+      res.status(200).json({ data: "Test", id: req.user });
     });
   }
 

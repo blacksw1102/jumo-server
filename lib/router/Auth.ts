@@ -1,5 +1,7 @@
 import express from "express";
 import passport from "passport";
+import jwt from "jsonwebtoken";
+import Config from "../Config";
 
 export default class AuthRouter {
     private Router: express.Router;
@@ -12,6 +14,36 @@ export default class AuthRouter {
             res.end('/');
         });
 
+        /**
+         * 로그인
+         */
+        this.Router.post("/signin", (req, res, next) => {
+            passport.authenticate("local", { session: false }, (err, user) => {
+                if (err || !user) {
+                    return res.status(400).end();
+                }
+
+                req.login(user, { session: false }, (err) => {
+                    if (err) {
+                        next(err);
+                    }
+                    const accessToken = jwt.sign({ id: user }, Config.getInstance().server.jwtAccessTokenSecret, { expiresIn: Config.getInstance().server.jwtAccessTokenExpire });
+                    const refreshToken = jwt.sign({ id: user }, Config.getInstance().server.jwtRefreshTokenSecret, { expiresIn: Config.getInstance().server.jwtRefreshTokenExpire });
+                    return res.status(200).json({ accessToken, refreshToken });
+                });
+            })(req, res);
+        });
+
+        /**
+         * Access Token 재발급
+         */
+        this.Router.post("/refresh", (req, res, next) => {
+            passport.authenticate("refresh-jwt", { session: false }, (err, user) => {
+                const accessToken = jwt.sign({ id: user }, Config.getInstance().server.jwtAccessTokenSecret, { expiresIn: Config.getInstance().server.jwtAccessTokenExpire });
+                res.status(200).json({ accessToken });
+            })(req, res);
+        });
+
         /* 로그인 요청 */
         this.Router.post("/auth", passport.authenticate("local", {
             successRedirect: "/",
@@ -21,7 +53,7 @@ export default class AuthRouter {
 
         /* 회원가입 폼 (테스트용 샘플) */
         this.Router.get("/signup", (req, res) => {
-            let html:string = `
+            let html: string = `
                 <!doctype html>
                 <html>
                 <head>

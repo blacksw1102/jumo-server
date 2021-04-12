@@ -1,11 +1,15 @@
 import passport from "passport";
 import passportLocal from "passport-local";
-import DB from "./DB";
+import passportJwt from "passport-jwt";
 import UserDAO from "./dao/UserDAO";
 import User from "./User";
 import { UserDTO } from "./dto/UserDTO";
+import Config from "./Config";
 
 const LocalStrategy = passportLocal.Strategy;
+const JwtStrategy = passportJwt.Strategy;
+const ExtractJwt = passportJwt.ExtractJwt;
+
 export default class Passport {
   constructor(passport: passport.PassportStatic) {
     /* 로그인 세션 */
@@ -17,7 +21,7 @@ export default class Passport {
     passport.deserializeUser((id: string, done) => {
       console.log('DeserializeUser - ', id);
       UserDAO.getUserById(id).then((data) => {
-        done(null, data);
+        done(null, data.id);
       });
     });
 
@@ -27,9 +31,8 @@ export default class Passport {
         {
           usernameField: "id",
           passwordField: "pw",
-          passReqToCallback: true
         },
-        (req, username, password, done) => {
+        (username, password, done) => {
           UserDAO.getUserById(username).then((user) => {
             User.comparePassword(password, user.pw, user.salt)
               .then((result) => {
@@ -40,12 +43,46 @@ export default class Passport {
               })
               .catch((err) => {
                 console.log(`[Failed] ${username} : Wrong Password`);
+                console.log(err);
                 return done(null, false, { message: "Wrong password" });
-              });;
+              });
           });
         }
       )
     );
+
+    passport.use(
+      "refresh-jwt",
+      new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: Config.getInstance().server.jwtRefreshTokenSecret,
+      },
+        (payload, done) => {
+          return done(null, payload.id);
+        }
+      ));
+
+    /* jwt Strategy */
+    passport.use(
+      new JwtStrategy(
+        {
+          jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+          secretOrKey: Config.getInstance().server.jwtAccessTokenSecret,
+        },
+        (payload, done) => {
+          return done(null, payload.id);
+          // UserDAO.getUserById(payload.id).then((data) => {
+          //   console.log(payload.id);
+          //   if (!data) {
+          //     return done(null, false);
+          //   }
+
+          //   return done(null, data);
+          // });
+        }
+      )
+    );
+
     /* 회원가입 */
     passport.use('local-signup', new LocalStrategy({
       usernameField: 'id',

@@ -2,7 +2,11 @@ import mysql from "mysql";
 import fs from "fs";
 import path from "path";
 export interface ServerConfig {
-  port: number
+  port: number,
+  jwtAccessTokenSecret: string,
+  jwtAccessTokenExpire: string
+  jwtRefreshTokenSecret: string,
+  jwtRefreshTokenExpire: string
 }
 export default class Config {
   public static CONFIG_PATH = path.join(
@@ -19,7 +23,11 @@ export default class Config {
   private constructor() {
     this.db = {};
     this.server = {
-      port: 8080
+      port: 8080,
+      jwtAccessTokenSecret: "secret",
+      jwtAccessTokenExpire: "30m",
+      jwtRefreshTokenSecret: "secrret",
+      jwtRefreshTokenExpire: "14d"
     };
   }
 
