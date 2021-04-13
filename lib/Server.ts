@@ -17,7 +17,7 @@ export default class Server {
   }
 
   private initAddon() {
-    this.app.use(logger("dev"));
+    this.app.use(logger("common"));
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
 
