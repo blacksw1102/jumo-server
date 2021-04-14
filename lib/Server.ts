@@ -6,6 +6,7 @@ import flash from "connect-flash";
 import AuthRouter from "./router/Auth";
 import SearchRouter from "./router/Search";
 import DevRouter from "./router/Dev";
+import RestaurantRouter from "./router/Restaurant";
 
 export default class Server {
   public app: express.Application;
@@ -29,6 +30,7 @@ export default class Server {
   private initRouter() {
     this.app.use(new AuthRouter().getRouter());
     this.app.use(new SearchRouter().getRouter());
+    this.app.use("/restaurant", new RestaurantRouter().getRouter());
     this.app.use(new DevRouter().getRouter());
   }
 }
