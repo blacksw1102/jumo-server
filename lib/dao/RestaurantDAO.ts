@@ -49,7 +49,7 @@ class RestaurantDAO {
         }
 
         conn.query(
-          "SELECT *, COUNT(*) as review_count FROM restaurant join review WHERE name LIKE ?",
+          "SELECT res.*, (SELECT COUNT(*) FROM review WHERE company_no = res.company_no) AS review_cnt FROM restaurant res WHERE res.name LIKE ?",
           [`%${keyword}%`],
           (err, data) => {
             if (err) {
@@ -59,7 +59,12 @@ class RestaurantDAO {
 
             let result = data.map((item: any) => {
               return new RestaurantSearchResultDTO(
-                item.restaurant_name, item.restaurant_score, item.restaurant_image, item.restaurant_description, item.average_cooking_time, item.review_count
+                item.restaurant_name,
+                item.restaurant_score,
+                item.restaurant_image,
+                item.restaurant_description,
+                item.average_cooking_time,
+                item.review_count
               );
             });
 
