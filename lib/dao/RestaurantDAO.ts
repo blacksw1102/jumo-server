@@ -59,12 +59,12 @@ class RestaurantDAO {
 
             let result = data.map((item: any) => {
               return new RestaurantSearchResultDTO(
-                item.restaurant_name,
-                item.restaurant_score,
-                item.restaurant_image,
-                item.restaurant_description,
+                item.name,
+                item.score,
+                item.profile_image,
+                item.description,
                 item.average_cooking_time,
-                item.review_count
+                item.review_cnt
               );
             });
 
