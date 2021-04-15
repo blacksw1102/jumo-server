@@ -36,8 +36,13 @@ dev-start-test:
   tags:
     - test-dev-run
 
-dev-start-server:
+dev-deploy:
   stage: deploy
   script:
     - npm i
-    - pwd
+    - npm run build
+    - echo  $SERVER_CONFIG | base64 -d > ./config/config.json
+    - cp . ~/jumo-dev-server
+    - pm2 restartOrstart ~/jumo-dev-server/index.js
+  tags:
+    - dev-deploy
