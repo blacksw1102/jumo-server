@@ -8,9 +8,10 @@ export default class SearchRouter {
   constructor() {
     this.Router = express.Router();
 
-    /* 검색 */
-    this.Router.get("/search/:keyword", (req, res) => {
-      RestaurantDAO.getSearchResult(req.params.keyword).then((result) => {
+    this.Router.get("/", (req, res, next) => {
+      const keyword: string = req.query.keyword as string;
+
+      RestaurantDAO.getSearchResult(keyword).then((result) => {
         res.json(result);
       });
     });

@@ -9,8 +9,10 @@ export default class RestaurantRouter {
     this.Router = express.Router();
 
     /* 검색 */
-    this.Router.get("/:keyword", (req, res, next) => {
-      RestaurantDAO.getSearchResult(req.params.keyword).then((result) => {
+    this.Router.get("/search-result", (req, res, next) => {
+      const keyword: string = req.query.keyword as string;
+
+      RestaurantDAO.getSearchResult(keyword).then((result) => {
         res.json(result);
       });
     });

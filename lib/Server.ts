@@ -29,7 +29,7 @@ export default class Server {
 
   private initRouter() {
     this.app.use(new AuthRouter().getRouter());
-    this.app.use(new SearchRouter().getRouter());
+    this.app.use("/search", new SearchRouter().getRouter());
     this.app.use("/restaurant", new RestaurantRouter().getRouter());
     this.app.use(new DevRouter().getRouter());
   }
