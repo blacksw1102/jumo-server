@@ -2,13 +2,14 @@ import express from "express";
 import Restaurant from "../Restaurant";
 import RestaurantDAO from "../dao/RestaurantDAO";
 
-export default class SearchRouter {
+export default class RestaurantRouter {
   private Router: express.Router;
 
   constructor() {
     this.Router = express.Router();
 
-    this.Router.get("/", (req, res, next) => {
+    /* 검색 */
+    this.Router.get("/search-result", (req, res, next) => {
       const keyword: string = req.query.keyword as string;
 
       RestaurantDAO.getSearchResult(keyword).then((result) => {
