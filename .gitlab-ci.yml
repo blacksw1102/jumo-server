@@ -3,6 +3,7 @@ stages:
   - test
   - build
   - run-server
+  - deploy
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -34,3 +35,9 @@ dev-start-test:
     - npm run start
   tags:
     - test-dev-run
+
+dev-start-server:
+  stage: deploy
+  script:
+    - npm i
+    - pwd
