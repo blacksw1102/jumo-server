@@ -43,6 +43,6 @@ dev-deploy:
     - npm run build
     - echo  $SERVER_CONFIG | base64 -d > ./config/config.json
     - cp . ~/jumo-dev-server
-    - pm2 restartOrstart ~/jumo-dev-server/index.js
+    - pm2 restart ~/jumo-dev-server/index.js
   tags:
     - dev-deploy
