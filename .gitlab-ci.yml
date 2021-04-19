@@ -1,31 +1,10 @@
 image: node:latest
 stages:
   - test
-  - build
-  - run-server
-
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .node_modules/
-
-dev-build:
-  stage: build
-  # only:
-  # - develop
-  script:
-    - npm i
-    - npm run build
-  tags:
-    - test-dev-run
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - .node_modules/
-      - \*.js
+  - deploy
 
 dev-start-test:
-  stage: run-server
+  stage: test
   script:
     - npm i
     - npm run build
@@ -34,3 +13,17 @@ dev-start-test:
     - npm run start
   tags:
     - test-dev-run
+
+dev-deploy:
+  stage: deploy
+  only:
+    - develop
+  script:
+    - npm i
+    - npm run build
+    - echo  $SERVER_CONFIG | base64 -d > ./config/config.json
+    - rm -rf ~/jumo-dev-server
+    - cp -r . ~/jumo-dev-server
+    - pm2 start ~/jumo-dev-server/index.js || pm2 restart ~/jumo-dev-server/index.js
+  tags:
+    - dev-deploy
