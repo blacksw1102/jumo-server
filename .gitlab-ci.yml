@@ -1,32 +1,10 @@
 image: node:latest
 stages:
   - test
-  - build
-  - run-server
   - deploy
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - .node_modules/
-
-dev-build:
-  stage: build
-  # only:
-  # - develop
-  script:
-    - npm i
-    - npm run build
-  tags:
-    - test-dev-run
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - .node_modules/
-      - \*.js
-
 dev-start-test:
-  stage: run-server
+  stage: test
   script:
     - npm i
     - npm run build
