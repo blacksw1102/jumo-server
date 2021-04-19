@@ -22,7 +22,6 @@ dev-deploy:
     - echo  $SERVER_CONFIG | base64 -d > ./config/config.json
     - rm -rf ~/jumo-dev-server
     - cp -r . ~/jumo-dev-server
-    - ls ~/jumo-dev-server
     - pm2 start ~/jumo-dev-server/index.js || pm2 restart ~/jumo-dev-server/index.js
   tags:
     - dev-deploy
