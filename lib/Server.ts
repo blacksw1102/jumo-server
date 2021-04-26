@@ -3,6 +3,7 @@ import logger from "morgan";
 import passport from "passport";
 import flash from "connect-flash";
 
+import WebServer from "./router/Web";
 import AuthRouter from "./router/Auth";
 import SearchRouter from "./router/Search";
 import DevRouter from "./router/Dev";
@@ -25,9 +26,14 @@ export default class Server {
     // passport
     this.app.use(flash());
     this.app.use(passport.initialize());
+
+    // EJS View 설정
+    this.app.set("view engine", "ejs");
   }
 
   private initRouter() {
+    this.app.use(express.static("static"));
+    this.app.use(new WebServer().getRouter());
     this.app.use(new AuthRouter().getRouter());
     this.app.use("/search", new SearchRouter().getRouter());
     this.app.use("/restaurant", new RestaurantRouter().getRouter());

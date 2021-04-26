@@ -9,11 +9,6 @@ export default class AuthRouter {
     constructor() {
         this.Router = express.Router();
 
-        /* 로그인 영역 */
-        this.Router.get("/", (req, res) => {
-            res.end('/');
-        });
-
         /**
          * 로그인
          */
