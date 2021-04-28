@@ -104,12 +104,13 @@ section {
     column-gap: 0.5em;
 
     margin: 0.3em 0 0.3em 0;
+    padding-bottom: 1em;
 }
 
 .btn-social-list {
     display: flex;
     flex-direction:column;
-    row-gap: 0.3em;
+    row-gap: 0.5em;
 
     margin: 0.5em 0 0 0;
 }
@@ -124,4 +125,8 @@ section {
 
 .btn-login-google {
     background-color: skyblue;
+}
+
+.input-area {
+    padding-bottom: 1em;
 }
