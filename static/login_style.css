@@ -1,0 +1,26 @@
+section, body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+section {
+    display: flex;
+    align-items: center;
+}
+.login-frame {
+    padding:10px;
+	box-shadow:0 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+	background-color:#ffffff;
+	word-break:break-all;
+    display: block;
+
+	font-size:14px;
+	line-height:1.6em;
+
+	border-radius: 10px;
+	margin-bottom: 10px;
+
+    min-width: 400px;
+    margin: 0 auto;
+}
