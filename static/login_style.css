@@ -50,7 +50,7 @@ section {
 .txtbox-input:focus{
     box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 4px 4px 2px rgba(0, 0, 0, 0.15)
 }
-.btn-simple, .btn-social {
+.btn-box, .btn-social, .btn-simple {
     padding: 0.5em;
     border-radius: 12px;
     width: 100%;
@@ -72,6 +72,13 @@ section {
 
 .btn-simple {
     display: block;
+    color: #000000;
+	box-shadow:none;
+    text-decoration: none;
+}
+
+.btn-box {
+    display: block;
     background-color: orange;
     color: #fafafa;
 }
@@ -82,11 +89,11 @@ section {
     align-items: center;
 }
 
-.btn-social:hover, .btn-simple:hover {
+.btn-social:hover, .btn-box:hover, .btn-simple:hover {
     box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 3px 2px 0 rgba(0, 0, 0, 0.15);
 }
 
-.btn-social:active, .btn-simple:active {
+.btn-social:active, .btn-box:active, .btn-simple:active {
     box-shadow:0 2px 3px 2px rgba(0,0,0,0.15),0 5px 6px 3px rgba(0,0,0,0.15);
 }
 
@@ -138,4 +145,17 @@ section {
     margin: 0 auto;
     height: 5em;
     width: 5em;
+}
+
+.btn-find-account-list {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0.8em 0 0 0;
+}
+
+.btn-find-account-list > a { 
+    padding: 0.3em 0.6em;
+    font-size: 0.9em;
+    width:max-content;
+    color: rgb(0, 132, 255);
 }
