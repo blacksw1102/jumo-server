@@ -50,8 +50,7 @@ section {
 .txtbox-input:focus{
     box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 4px 4px 2px rgba(0, 0, 0, 0.15)
 }
-
-.btn-simple {
+.btn-simple, .btn-social {
     padding: 0.5em;
     border-radius: 12px;
     width: 100%;
@@ -60,7 +59,6 @@ section {
     outline:none;
     border: none;
 
-    background-color: orange;
     color: #fafafa;
 
     cursor: pointer;
@@ -69,28 +67,18 @@ section {
     transition-duration: 0.3;
 
 	box-shadow:0 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-simple {
+    display: block;
+    background-color: orange;
+    color: #fafafa;
 }
 
 .btn-social {
-    padding: 0.5em;
-    border-radius: 12px;
-    width: 100%;
     display: flex;
     vertical-align: middle;
     align-items: center;
-
-    text-align:center;
-    outline:none;
-    border: none;
-
-    color: #fafafa;
-
-    cursor: pointer;
-
-    transition-property: box-shadow;
-    transition-duration: 0.3;
-
-	box-shadow:0 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .btn-social:hover, .btn-simple:hover {
