@@ -158,5 +158,12 @@ section {
     padding: 0.3em 0.6em;
     font-size: 0.9em;
     width:max-content;
-    color: rgb(0, 132, 255);
+    color: 
+    rgb(0, 132, 255);
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .login-frame {
+	    box-shadow: none;
+    }
 }
