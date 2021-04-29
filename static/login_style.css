@@ -58,6 +58,7 @@ section {
     text-align:center;
     outline:none;
     border: none;
+    user-select: none;
 
     color: #fafafa;
 
