@@ -71,6 +71,26 @@ section {
     left: 0;
 }
 
+.btn-simple {
+    padding: 0.5em;
+    border-radius: 12px;
+    width: 100%;
+
+    text-align:center;
+    outline:none;
+    border: none;
+
+    background-color: orange;
+    color: #fafafa;
+
+    cursor: pointer;
+
+    transition-property: box-shadow;
+    transition-duration: 0.3;
+
+	box-shadow:0 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
 .btn-social {
     padding: 0.5em;
     border-radius: 12px;
@@ -93,23 +113,25 @@ section {
 	box-shadow:0 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-.btn-social:hover {
+.btn-social:hover, .btn-simple:hover {
     box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 3px 2px 0 rgba(0, 0, 0, 0.15);
 }
 
-.btn-social:active {
+.btn-social:active, .btn-simple:active {
     box-shadow:0 2px 3px 2px rgba(0,0,0,0.15),0 5px 6px 3px rgba(0,0,0,0.15);
 }
 
 .btn-social .login-logo {
     height: 1.8em;
     width: 1.8em;
-    margin: 0 2.4em 0 0.8em;
+    margin: 0 0 0 0.8em;
 }
 
 .btn-social .login-text {
     height: 14px;
     line-height: 1.8em;
+    justify-content: center;
+    width: 100%;
 }
 
 .button-list {
@@ -140,16 +162,6 @@ section {
 .btn-login-google {
     background-color: #ffffff;
     color: #000000;
-}
-
-.btn-login-google div {
-    font-family: Roboto, sans-serif;
-    font-size: 14px;
-    height: 1.8em;
-    line-height: 1.8em;
-}
-.btn-login-naver .login-text, .btn-login-kakao .login-text {
-
 }
 
 .input-area {
