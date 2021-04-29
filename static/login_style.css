@@ -2,12 +2,13 @@ section, body {
     height: 100%;
     width: 100%;
     position: absolute;
+    padding: 0;
+    margin: 0;
 }
 
 section {
     display: flex;
     align-items: center;
-    padding: 0.3em;
 }
 
 .login-frame {
