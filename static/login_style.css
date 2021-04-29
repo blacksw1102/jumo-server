@@ -125,7 +125,23 @@ section {
 }
 
 .btn-login-google {
-    background-color: skyblue;
+    background-color: #ffffff;
+    color: #000000;
+    line-height: 0.5em;
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+}
+.btn-login-google img {
+    height: 1.8em;
+    width: 1.8em;
+    margin: 0 2.4em 0 0.8em;
+}
+.btn-login-google div {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    height: 1.8em;
+    line-height: 1.8em;
 }
 
 .input-area {
