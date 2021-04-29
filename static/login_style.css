@@ -57,6 +57,7 @@ section {
     width: 100%;
 
     text-align:center;
+    text-decoration: none;
     outline:none;
     border: none;
     user-select: none;
