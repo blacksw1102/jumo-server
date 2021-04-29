@@ -28,24 +28,20 @@ section {
     margin: 0 auto;
 }
 
-.txtbox-wrapper {
-    position:relative;
-
-    padding: 5px 0 0 0;
-}
-
-.txtbox-box {
+.input-area {
+    padding-bottom: 1em;
     display: flex;
+    flex-direction: column;
 }
 
 .txtbox-input {
     border: none;
     outline: none;
     padding: 0.8em 0.8em;
+    margin: 0 0 0.8em 0;
     border-radius: 5px;
     box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 3px 2px 0 rgba(0, 0, 0, 0.15);
 
-    width: 100%;
     
     transition-property: box-shadow;
     transition-duration: 0.3;
@@ -53,23 +49,6 @@ section {
 
 .txtbox-input:focus{
     box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 4px 4px 2px rgba(0, 0, 0, 0.15)
-}
-
-.txtbox-input:focus ~ .txtbox-hint {
-    color: transparent;
-}
-
-.txtbox-hint  {
-    position: absolute;
-
-    padding: 0.8em 0.8em;
-    color: #7a7a7a;
-    user-select: none;
-
-    cursor: text;
-
-    top: 0;
-    left: 0;
 }
 
 .btn-simple {
@@ -163,10 +142,6 @@ section {
 .btn-login-google {
     background-color: #ffffff;
     color: #000000;
-}
-
-.input-area {
-    padding-bottom: 1em;
 }
 
 .jumo-logo {
