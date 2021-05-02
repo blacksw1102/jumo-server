@@ -1,0 +1,109 @@
+@import "init.scss";
+@import "./component/frame.scss";
+@import "./component/buttons.scss";
+@import "./component/txtbox.scss";
+
+section {
+    display: flex;
+    align-items: center;
+}
+
+.login-frame {
+    @extend .frame;
+
+	word-break:break-all;
+    display: flex;
+    flex-direction: column;
+
+	font-size:14px;
+	line-height:1.6em;
+
+	margin-bottom: 10px;
+
+    min-width: 400px;
+    margin: 0 auto;
+}
+
+.input-area {
+    padding-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-social {
+    @extend .btn-box;
+
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+
+    .login-logo {
+        height: 1.8em;
+        width: 1.8em;
+        margin: 0 0 0 0.8em;
+    }
+
+    .login-text {
+        height: 14px;
+        line-height: 1.8em;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+.button-list {
+    display: flex;
+    flex-direction:space-evenly;
+    column-gap: 0.5em;
+
+    margin: 0.3em 0 0.3em 0;
+    padding-bottom: 1em;
+}
+
+.btn-social-list {
+    display: flex;
+    flex-direction:column;
+    row-gap: 0.5em;
+
+    margin: 0.5em 0 0 0;
+}
+
+.btn-login-kakao {
+    background-color: #FEE500;
+}
+
+.btn-login-naver {
+    background-color: #1EC800;
+}
+
+.btn-login-google {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.jumo-logo {
+    justify-content: center;
+    margin: 0 auto;
+    height: 5em;
+    width: 5em;
+}
+
+.btn-find-account-list {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0.8em 0 0 0;
+}
+
+.btn-find-account-list > a { 
+    padding: 0.3em 0.6em;
+    font-size: 0.9em;
+    width:max-content;
+    color: 
+    rgb(0, 132, 255);
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .login-frame {
+	    box-shadow: none;
+    }
+}

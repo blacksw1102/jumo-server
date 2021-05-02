@@ -1,8 +1,11 @@
+import path from "path";
+
 import express from "express";
 import logger from "morgan";
 import passport from "passport";
 import flash from "connect-flash";
 import moment from "moment-timezone";
+import sassMiddleWare from "node-sass-middleware";
 
 import WebServer from "./router/Web";
 import AuthRouter from "./router/Auth";
@@ -34,6 +37,18 @@ export default class Server {
 
     // EJS View 설정
     this.app.set("view engine", "ejs");
+
+    // sassMiddleWare 설정
+    this.app.use(
+      sassMiddleWare({
+        /* Options */
+        src: path.join(__dirname, "..", "scss"),
+        dest: path.join(__dirname, "..", "static"),
+        debug: true,
+        outputStyle: "compressed",
+        prefix: "",
+      })
+    );
   }
 
   private initRouter() {

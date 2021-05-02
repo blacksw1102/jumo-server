@@ -124,3 +124,6 @@ config/*.json
 
 # TypeScript
 *.js
+
+# css
+static/*.css
