@@ -96,6 +96,7 @@ export default class Passport {
               return done(null, id);
             })
             .catch(err => {
+              console.log(err);
               return done(null, false, { message: "Duplicaed ID" });
             });
         }
