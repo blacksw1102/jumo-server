@@ -91,13 +91,15 @@ export default class Passport {
     }, (req, username, password, done) => {
       User.cryptPassword(password).then((cryptResult) => {
         {
-          UserDAO.insert(new UserDTO(username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel, "", 0, 0))
+          UserDAO.insert(new UserDTO(username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel, "", 0, 0, req.body.birth_date))
             .then(id => {
               return done(null, id);
             })
             .catch(err => {
-              console.log(err);
-              return done(null, false, { message: "Duplicaed ID" });
+              if (err) {
+                console.log(`SIGNUP QUERY ERROR: ${err.errno}: ${err.sqlMessage}`);
+                return done(null, "1062", { message: "Duplicate ID" });
+              }
             });
         }
       })
