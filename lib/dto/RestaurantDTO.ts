@@ -50,4 +50,5 @@ export class RestaurantInfoDTO {
         this.review_cnt = review_cnt
         this.review_avg = review_avg
     }
+
 }

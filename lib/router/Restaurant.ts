@@ -16,6 +16,11 @@ export default class RestaurantRouter {
         res.json(result);
       });
     });
+
+    this.Router.get("/:id", async (req, res, next) => {
+      let result = RestaurantDAO.getRestaurantInfo(req.params.id);
+      res.json(result);
+    });
   }
 
   public getRouter(): express.Router {
