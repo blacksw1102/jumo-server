@@ -77,6 +77,44 @@ class RestaurantDAO {
       });
     });
   }
+
+  public getRestaurantInfo(company_no: string) {
+    return new Promise((resolve, reject) => {
+      DB.getPool().getConnection((err, conn) => {
+        // DB 에러 처리
+        if (err) {
+          console.log(err);
+        }
+
+        conn.query(
+          "SELECT res.company_no, res.name, res.address, res.profile_image, res.description, COUNT(rev.company_no), ISNULL(AVG(rev.score))=0 FROM restaurant res LEFT JOIN review rev ON res.company_no = rev.company_no WHERE res.company_no = ? GROUP BY res.company_no;",
+          [`%${company_no}%`],
+          (err, data) => {
+            if (err) {
+              console.log(err);
+              resolve([]);
+            }
+
+            let result = data.map((item: any) => {
+              return new RestaurantSearchResultDTO(
+                item.name,
+                item.score,
+                item.profile_image,
+                item.description,
+                item.average_cooking_time,
+                item.review_cnt
+              );
+            });
+
+            // 확인용 로그
+            console.log(data);
+            conn.release();
+            resolve(result);
+          }
+        );
+      });
+    });
+  }
 }
 
 export default new RestaurantDAO();
