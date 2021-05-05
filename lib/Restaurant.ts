@@ -1,4 +1,7 @@
 import DB from "./DB";
+
+import logger from "./logger";
+
 export default class Restaurant {
   constructor() { }
 
@@ -29,8 +32,6 @@ export default class Restaurant {
               };
             });
 
-            // 확인용 로그
-            console.log(data);
             conn.release();
             resolve(result);
           }
@@ -50,7 +51,7 @@ export default class Restaurant {
       DB.getPool().getConnection((err, conn) => {
         // DB 에러 처리
         if (err) {
-          console.log(err);
+          logger.error(err);
         }
 
         conn.query(
