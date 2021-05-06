@@ -4,6 +4,7 @@ import passport from "passport";
 import logger from "../logger";
 
 import UserDAO from "../dao/UserDAO";
+import OrderDAO from "../dao/OrderDAO";
 import FavoriteDAO from "../dao/FavoriteDAO";
 
 export default class User {
@@ -21,6 +22,14 @@ export default class User {
                 logger.debug(JSON.stringify(data));
                 res.status(200).json(data);
             });
+        });
+
+        this.Router.get("/:userId/orders", passport.authenticate("jwt", { session: false }), (req, res, next) => {
+            if (req.user !== req.params.userId) {
+                logger.warn(`${req.user} doesn't have access to ${req.params.userId}`)
+                res.status(400).json();
+            }
+            OrderDAO
         });
     }
 
