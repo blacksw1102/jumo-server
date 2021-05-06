@@ -3,6 +3,7 @@ import Config from "./lib/Config";
 import DB from "./lib/DB";
 import Passport from "./lib/Passport";
 import passport from "passport";
+import logger from "./lib/logger";
 
 import User from "./lib/User";
 
@@ -16,11 +17,11 @@ async function main() {
   let serverPort = Config.getInstance().server.port;
 
   app.listen(serverPort, () => {
-    console.log("Server Start");
-    console.log(`Port : ${serverPort}`);
+    logger.info("Server Start");
+    logger.info(`Port : ${serverPort}`);
 
     if (process.env.EXIT_ON_SUCCESS) {
-      console.log("Server Stop");
+      logger.info("Server Stop");
       process.exit();
     }
   });
