@@ -1,5 +1,5 @@
 import express from "express";
-import morgan, {Options as MorganOptions} from "morgan";
+import morgan, { Options as MorganOptions } from "morgan";
 import passport from "passport";
 import flash from "connect-flash";
 import moment from "moment-timezone";
@@ -9,6 +9,7 @@ import AuthRouter from "./router/Auth";
 import SearchRouter from "./router/Search";
 import DevRouter from "./router/Dev";
 import RestaurantRouter from "./router/Restaurant";
+import UserRouter from "./router/User";
 
 export default class Server {
   public app: express.Application;
@@ -39,6 +40,7 @@ export default class Server {
 
   private initRouter() {
     this.app.use(new AuthRouter().getRouter());
+    this.app.use("/user", new UserRouter().getRouter());
     this.app.use("/search", new SearchRouter().getRouter());
     this.app.use("/restaurant", new RestaurantRouter().getRouter());
     this.app.use(new DevRouter().getRouter());
