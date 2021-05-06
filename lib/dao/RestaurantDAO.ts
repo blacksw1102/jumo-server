@@ -70,7 +70,7 @@ class RestaurantDAO {
             });
 
             // 확인용 로그
-            logger.debug(data);
+            logger.debug(JSON.stringify(data));
             conn.release();
             resolve(result);
           }
