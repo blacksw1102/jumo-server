@@ -43,8 +43,8 @@ export default class Passport {
                 }
               })
               .catch((err) => {
-                logger.info(`[Failed] ${username} : Wrong Password`);
                 logger.info(err);
+                logger.info(`[Failed] ${username} : Wrong Password`);
                 return done(null, false, { message: "Wrong password" });
               });
           });
