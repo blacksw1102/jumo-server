@@ -6,9 +6,8 @@ stages:
 dev-start-test:
   stage: test
   script:
-    - apt-get update
-    - apt-get install gcc -y
-    - apt-get install g++ -y
+    - node --version
+    - npm --version
     - npm i
     - npm run build
     - echo  $SERVER_CONFIG | base64 -d > ./config/config.json
