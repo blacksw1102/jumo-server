@@ -1,6 +1,8 @@
 import mysql from "mysql";
 import fs from "fs";
 import path from "path";
+
+import logger from "./logger";
 export interface ServerConfig {
   port: number,
   jwtAccessTokenSecret: string,
@@ -38,13 +40,13 @@ export default class Config {
     return new Promise((resolve, reject) => {
       fs.readFile(Config.CONFIG_PATH, (err, data) => {
         if (err) {
-          console.log("Config load error");
-          console.log(err);
+          logger.error("Config load error");
+          logger.error(err);
           reject();
         } else {
           Config.config = JSON.parse(data.toString());
-          console.log("Config load success");
-          console.log(Config.config);
+          logger.info("Config load success");
+          logger.info(JSON.stringify(Config.config, null, 4));
           resolve(null);
         }
       });

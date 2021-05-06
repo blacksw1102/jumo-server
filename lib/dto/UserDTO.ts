@@ -7,8 +7,9 @@ export class UserDTO {
     public profile_image?: string;
     public point: number;
     public usercol?: number;
+    public birth_date: string;
 
-    constructor(id: string, name: string, pw: string, salt: string, tel: number, profile_image: string, point: number, usercol: number) {
+    constructor(id: string, name: string, pw: string, salt: string, tel: number, profile_image: string, point: number, usercol: number, birth_date: string) {
         this.id = id;
         this.name = name;
         this.pw = pw;
@@ -17,5 +18,6 @@ export class UserDTO {
         this.profile_image = profile_image;
         this.point = point;
         this.usercol = usercol;
+        this.birth_date = birth_date;
     }
 }

@@ -1,5 +1,6 @@
 import mysql from "mysql";
 import config from "./Config";
+import logger from "./logger";
 
 export default class DBConnectionPool {
     static pool: mysql.Pool;
@@ -7,11 +8,10 @@ export default class DBConnectionPool {
     static async createPool() {
         try {
             DBConnectionPool.pool = mysql.createPool(config.getInstance().db);
-            console.log("DB Connection Pool 생성 성공");
-            console.log(config.getInstance().db);
+            logger.info("DB Connection Pool 생성 성공");
         } catch(e) {
-            console.log("DB Connection Pool 생성 오류");
-            console.log(e);
+            logger.error("DB Connection Pool 생성 오류");
+            logger.error(e);
         }
     }
 

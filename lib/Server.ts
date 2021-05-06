@@ -1,11 +1,12 @@
 import path from "path";
 
 import express from "express";
-import logger from "morgan";
+import morgan, { Options as MorganOptions } from "morgan";
 import passport from "passport";
 import flash from "connect-flash";
 import moment from "moment-timezone";
 import sassMiddleWare from "node-sass-middleware";
+import logger, { webLogStream } from "./logger";
 
 import WebServer from "./router/Web";
 import AuthRouter from "./router/Auth";
@@ -23,11 +24,15 @@ export default class Server {
   }
 
   private initAddon() {
-    logger.token('date', (req, res, tz) => {
-      return moment().tz("Asia/Seoul").format('YYYY-MM-DD, HH:mm:ss');
-    });
-    logger.format('myformat', '[:date] ":method :url" :status :res[content-length] - :response-time ms');
-    this.app.use(logger("myformat"));
+    const morganOption: MorganOptions<express.Request, express.Response> = {
+      stream: webLogStream
+    };
+    this.app.use(
+      morgan(
+        ":method :url :status :res[content-length] - :response-time ms",
+        morganOption
+      )
+    );
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
 
