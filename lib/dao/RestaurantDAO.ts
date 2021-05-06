@@ -1,4 +1,4 @@
-import { RestaurantSearchResultDTO } from "../dto/RestaurantDTO";
+import { RestaurantSearchResultDTO, RestaurantInfoDTO } from "../dto/RestaurantDTO";
 
 import DB from "../DB";
 import logger from "../logger";
@@ -71,6 +71,57 @@ class RestaurantDAO {
 
             // 확인용 로그
             logger.debug(data);
+            conn.release();
+            resolve(result);
+          }
+        );
+      });
+    });
+  }
+
+  public getRestaurantInfo(userId: string, companyNo: string) {
+    return new Promise((resolve, reject) => {
+      DB.getPool().getConnection((err, conn) => {
+        // DB 에러 처리
+        if (err) {
+          logger.error(err);
+        }
+
+        conn.query(
+          `
+            SELECT
+              res.company_no,
+              res.name,
+              res.address_base,
+              res.address_detail,
+              res.profile_image,
+              res.description,
+              res.user_id,
+              res.category_name,
+              COUNT(rev.orders_id) as review_cnt,
+              ISNULL(AVG(rev.score))=0 as review_score_avg,
+              ISNULL(fav.company_no)=FALSE as is_fav
+            FROM restaurant res
+            LEFT JOIN review rev ON res.company_no = (SELECT company_no FROM orders WHERE orders.id = rev.orders_id)
+            LEFT JOIN favorite fav ON fav.user_id = "user" AND fav.company_no = res.company_no
+            WHERE res.company_no = "0530000001"
+            GROUP BY res.company_no;
+          `,
+          [userId, companyNo],
+          (err, data) => {
+            if (err) {
+              logger.error(err);
+              resolve([]);
+            }
+
+            let result = data.map((item: any) => {
+              return new RestaurantInfoDTO(
+                item.company_no, item.name, item.address_base, item.address_detail, item.profile_image, item.description, item.user_id, item.category_name, item.review_cnt, item.review_avg, item.is_fav
+              );
+            });
+
+            // 확인용 로그
+            logger.debug(JSON.stringify(data));
             conn.release();
             resolve(result);
           }
