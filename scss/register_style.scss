@@ -19,7 +19,8 @@
     border-radius: 5px;
     box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 3px 2px 0 rgba(0, 0, 0, 0.15);
 
-    width: 100%;
+    width: 200%;
+    margin-bottom: 10px;
     
     transition-property: box-shadow;
     transition-duration: 0.3;
@@ -44,4 +45,50 @@
 
     top: 0;
     left: 0;
+}
+
+.btn-box {
+
+    margin-bottom: 10px;
+
+    width: 100%; 
+    margin-left: 10px;
+}
+
+.txtbox-simple {
+
+    border: none;
+    outline: none;
+    padding: 0.8em 0.8em;
+    border-radius: 5px;
+    box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 3px 2px 0 rgba(0, 0, 0, 0.15);
+
+    width: 100%;
+
+    margin-bottom: 10px;
+    
+    transition-property: box-shadow;
+    transition-duration: 0.3;
+}
+
+section {
+    display: flex;
+    align-items: center;
+}
+
+.register-area {
+    @extend .register-area;
+
+	word-break:break-all;
+    display: flex;
+    flex-direction: column;
+
+	font-size:14px;
+	line-height:1.6em;
+
+	margin-bottom: 10px;
+
+    min-width: 400px;
+    margin: 0 auto;
+    
 }
