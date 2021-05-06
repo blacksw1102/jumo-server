@@ -52,6 +52,7 @@ export default class Server {
         debug: true,
         outputStyle: "compressed",
         prefix: "",
+        log: (severity: string, key: string, value: string) => { logger.log(severity, `node-sass-middleware ${key} : ${value}`); }
       })
     );
   }
