@@ -116,7 +116,7 @@ class RestaurantDAO {
 
             let result = data.map((item: any) => {
               return new RestaurantInfoDTO(
-                item.company_no, item.name, item.address_base, item.address_detail, item.profile_image, item.description, item.user_id, item.category_name, item.review_cnt, item.review_avg, item.is_fav
+                item.company_no, item.name, item.address_base, item.address_detail, item.profile_image, item.description, item.user_id, item.category_name, item.review_cnt, item.review_score_avg, item.is_fav
               );
             });
 
