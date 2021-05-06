@@ -99,12 +99,12 @@ class RestaurantDAO {
               res.user_id,
               res.category_name,
               COUNT(rev.orders_id) as review_cnt,
-              ISNULL(AVG(rev.score))=0 as review_score_avg,
+              IFNULL(AVG(rev.score), 0) as review_score_avg,
               ISNULL(fav.company_no)=FALSE as is_fav
             FROM restaurant res
             LEFT JOIN review rev ON res.company_no = (SELECT company_no FROM orders WHERE orders.id = rev.orders_id)
             LEFT JOIN favorite fav ON fav.user_id = "user" AND fav.company_no = res.company_no
-            WHERE res.company_no = "0530000001"
+            WHERE res.company_no = "0530000061"
             GROUP BY res.company_no;
           `,
           [userId, companyNo],
