@@ -30,7 +30,7 @@ export default class Server {
     };
     this.app.use(
       morgan(
-        ":method :url :status :res[content-length] - :response-time ms\\",
+        ":method :url :status :res[content-length] - :response-time ms",
         morganOption
       )
     );
@@ -53,6 +53,7 @@ export default class Server {
         debug: true,
         outputStyle: "compressed",
         prefix: "",
+        log: (severity: string, key: string, value: string) => { logger.log(severity, `node-sass-middleware ${key} : ${value}`); }
       })
     );
   }
