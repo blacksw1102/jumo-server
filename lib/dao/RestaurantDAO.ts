@@ -103,8 +103,8 @@ class RestaurantDAO {
               ISNULL(fav.company_no)=FALSE as is_fav
             FROM restaurant res
             LEFT JOIN review rev ON res.company_no = (SELECT company_no FROM orders WHERE orders.id = rev.orders_id)
-            LEFT JOIN favorite fav ON fav.user_id = "user" AND fav.company_no = res.company_no
-            WHERE res.company_no = "0530000061"
+            LEFT JOIN favorite fav ON fav.user_id = ? AND fav.company_no = res.company_no
+            WHERE res.company_no = ?
             GROUP BY res.company_no;
           `,
           [userId, companyNo],
