@@ -1,6 +1,7 @@
 import { RestaurantSearchResultDTO } from "../dto/RestaurantDTO";
 
 import DB from "../DB";
+import logger from "../logger";
 
 class RestaurantDAO {
   create(
@@ -13,7 +14,7 @@ class RestaurantDAO {
       DB.getPool().getConnection((err, conn) => {
         // DB 에러 처리
         if (err) {
-          console.log(err);
+          logger.error(err);
         }
 
         conn.query(
@@ -21,7 +22,7 @@ class RestaurantDAO {
           [name, address, description, categoryId],
           (err, data) => {
             if (err) {
-              console.log(err);
+              logger.error(err);
             }
 
             let result = data.map((item: any) => {
@@ -31,7 +32,7 @@ class RestaurantDAO {
             });
 
             // 확인용 로그
-            console.log(data);
+            logger.debug(JSON.stringify(data));
             conn.release();
             resolve(result);
           }
@@ -45,7 +46,7 @@ class RestaurantDAO {
       DB.getPool().getConnection((err, conn) => {
         // DB 에러 처리
         if (err) {
-          console.log(err);
+          logger.error(err);
         }
 
         conn.query(
@@ -53,7 +54,7 @@ class RestaurantDAO {
           [`%${keyword}%`],
           (err, data) => {
             if (err) {
-              console.log(err);
+              logger.error(err);
               resolve([]);
             }
 
@@ -69,7 +70,7 @@ class RestaurantDAO {
             });
 
             // 확인용 로그
-            console.log(data);
+            logger.debug(data);
             conn.release();
             resolve(result);
           }

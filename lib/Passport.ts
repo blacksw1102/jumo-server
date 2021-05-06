@@ -5,6 +5,7 @@ import UserDAO from "./dao/UserDAO";
 import User from "./User";
 import { UserDTO } from "./dto/UserDTO";
 import Config from "./Config";
+import logger from "./logger";
 
 const LocalStrategy = passportLocal.Strategy;
 const JwtStrategy = passportJwt.Strategy;
@@ -14,12 +15,12 @@ export default class Passport {
   constructor(passport: passport.PassportStatic) {
     /* 로그인 세션 */
     passport.serializeUser((user, done) => {
-      console.log('SerializeUser - ', user);
+      logger.info('SerializeUser - ', user);
       done(null, user);
     });
 
     passport.deserializeUser((id: string, done) => {
-      console.log('DeserializeUser - ', id);
+      logger.info("DeserializeUser - ", id);
       UserDAO.getUserById(id).then((data) => {
         done(null, data.id);
       });
@@ -37,13 +38,13 @@ export default class Passport {
             User.comparePassword(password, user.pw, user.salt)
               .then((result) => {
                 if (result) {
-                  console.log(`[Succeed] ${username} Sign in`);
+                  logger.info(`Succeed ${username} Sign in`);
                   return done(null, user.id);
                 }
               })
               .catch((err) => {
-                console.log(`[Failed] ${username} : Wrong Password`);
-                console.log(err);
+                logger.info(err);
+                logger.info(`[Failed] ${username} : Wrong Password`);
                 return done(null, false, { message: "Wrong password" });
               });
           });
@@ -97,7 +98,9 @@ export default class Passport {
             })
             .catch(err => {
               if (err) {
-                console.log(`SIGNUP QUERY ERROR: ${err.errno}: ${err.sqlMessage}`);
+                logger.info(
+                  `SIGNUP QUERY ERROR ${err.errno}: ${err.sqlMessage}`
+                );
                 return done(null, "1062", { message: "Duplicate ID" });
               }
             });
