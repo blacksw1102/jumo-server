@@ -1,5 +1,5 @@
 import { StreamOptions } from "morgan";
-import winston, { transports, format, addColors, http } from "winston";
+import winston, { transports, format } from "winston";
 
 interface TransformableInfo {
   level: string;
@@ -42,9 +42,10 @@ const logger = winston.createLogger({
 });
 
 const webLogStream: StreamOptions = {
-    write: (message) => {
-        logger.http(message.split("\n")[0])
-    }
+  write: (message) => {
+    logger.http(message.split("\n")[0]);
+  }
 }
-export {webLogStream};
+
+export { webLogStream };
 export default logger;
