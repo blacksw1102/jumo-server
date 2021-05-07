@@ -5,7 +5,7 @@ export class OrderDTO {
   restaurantName: string;
   totalPrice: number;
   paymentType: string;
-  request_msg: string;
+  requestMsg: string;
   menuList: MenuList[];
 
   constructor(
@@ -15,7 +15,7 @@ export class OrderDTO {
     restaurantName: string,
     totalPrice: number,
     paymentType: string,
-    request_msg: string,
+    requestMsg: string,
     menuList: MenuList[]
   ) {
     this.orderId = orderId;
@@ -24,29 +24,33 @@ export class OrderDTO {
     this.restaurantName = restaurantName;
     this.totalPrice = totalPrice;
     this.paymentType = paymentType;
-    this.request_msg = request_msg;
+    this.requestMsg = requesMsg;
     this.menuList = menuList;
   }
 }
 
-class MenuList {
+export class MenuList {
+  id: number;
   name: string;
   price: number;
   optionList: OptionList[];
 
-  constructor(name: string, price: number, optionList: OptionList[]) {
+  constructor(id:number, name: string, price: number, optionList: OptionList[]) {
+    this.id = id;
     this.name = name;
     this.price = price;
     this.optionList = optionList;
   }
 }
 
-class OptionList {
+export class OptionList {
+    id: number;
     name: string;
     price: number;
 
-  constructor(name: string, price: number) {
-    this.name = name
-    this.price = price
+  constructor(id: number, name: string, price: number) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
   }
 }

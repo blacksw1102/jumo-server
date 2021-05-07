@@ -29,7 +29,10 @@ export default class User {
                 logger.warn(`${req.user} doesn't have access to ${req.params.userId}`)
                 res.status(400).json();
             }
-            OrderDAO
+            OrderDAO.getOrderListByUserId(req.params.userId).then(data => {
+                logger.debug(JSON.stringify(data, null, 4));
+                res.status(200).json(data);
+            })
         });
     }
 
