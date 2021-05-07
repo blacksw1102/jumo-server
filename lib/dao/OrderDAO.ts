@@ -11,33 +11,41 @@ class OrderDAO {
                     logger.error("OrderDAO.getOrderListByUserId() DB Connect Error" + err);
                 }
 
-                conn.query(`
+                conn.query(
+                  `
                     SELECT
-                        res.company_no,
-                        res.name,
-                        res.profile_image,
-                        COUNT(orders.id) as order_cnt,
-                        COUNT(rev.orders_id) as review_cnt,
-                        IFNULL(AVG(rev.score), 0) as review_score_avg
-                    FROM favorite fav
-                    LEFT JOIN restaurant res ON res.company_no = fav.company_no
-                    LEFT JOIN orders ON orders.company_no = res.company_no
-                    LEFT JOIN review rev ON rev.orders_id = orders.id
-                    WHERE fav.user_id="test"
-                    GROUP BY res.company_no;
-                `, [userId], (err, data) => {
+                        o.id,
+                        o.company_no,
+                        o.date,
+                        r.name,
+                        o.payment_type,
+                        o.request_msg,
+                        oi.price,
+                        oi.count,
+                        m.name,
+                        op.name,
+                        op.price
+                    FROM orders o
+                        LEFT JOIN restaurant r ON r.company_no = o.company_no
+                        LEFT JOIN order_item oi ON o.id = oi.orders_id
+                        LEFT JOIN menu m ON oi.menu_id = m.id
+                        LEFT JOIN options op ON oi.option_id = op.id;
+                `,
+                  [userId],
+                  (err, data) => {
                     if (err) {
-                        logger.error("OrderDAO.getOrderListByUserId() DB Query Error" + err);
+                      logger.error(
+                        "OrderDAO.getOrderListByUserId() DB Query Error" + err
+                      );
                     }
 
                     let result = data.map((item: any) => {
-                        return new OrderDAO(
-
-                        );
+                      return new OrderDTO();
                     });
 
                     resolve(result);
-                });
+                  }
+                );
             });
         });
     }
