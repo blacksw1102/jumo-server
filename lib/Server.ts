@@ -65,6 +65,6 @@ export default class Server {
     this.app.use("/user", new UserRouter().getRouter());
     this.app.use("/search", new SearchRouter().getRouter());
     this.app.use("/restaurant", new RestaurantRouter().getRouter());
-    this.app.use(new DevRouter().getRouter());
+    this.app.use("/dev", new DevRouter().getRouter());
   }
 }
