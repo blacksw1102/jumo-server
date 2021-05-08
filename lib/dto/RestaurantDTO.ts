@@ -3,23 +3,29 @@ export class RestaurantSearchResultDTO {
     score: number;
     image: string;
     description: string;
-    average_cooking_time: string;
-    review_count: number;
+    averageCooking_time: string;
+    reviewCount: number;
+    reviewAvgScore: number;
+    orderCount: number;
 
     constructor(
-        name: string,
-        score: number,
-        image: string,
-        description: string,
-        average_cooking_time: string,
-        review_count: number
+        name: string, 
+        score: number, 
+        image: string, 
+        description: string, 
+        averageCooking_time: string, 
+        reviewCount: number, 
+        reviewAvgScore: number, 
+        orderCount: number
     ) {
         this.name = name
         this.score = score
         this.image = image
         this.description = description
-        this.average_cooking_time = average_cooking_time
-        this.review_count = review_count
+        this.averageCooking_time = averageCooking_time
+        this.reviewCount = reviewCount
+        this.reviewAvgScore = reviewAvgScore
+        this.orderCount = orderCount
     }
 }
 
