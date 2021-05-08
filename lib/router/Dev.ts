@@ -29,7 +29,7 @@ export default class AuthRouter {
             logger.error(err.toString());
             res.status(400);
           }
-          res.setHeader("Content-Type", "text/plain");
+          res.setHeader("Content-Type", "text/plain; charset=utf-8");
           res.status(200).send(data);
         }
       );
