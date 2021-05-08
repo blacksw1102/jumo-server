@@ -1,4 +1,4 @@
-image: node:latest
+image: node:14.16.1
 stages:
   - test
   - deploy
@@ -6,6 +6,8 @@ stages:
 dev-start-test:
   stage: test
   script:
+    - node --version
+    - npm --version
     - npm i
     - npm run build
     - echo  $SERVER_CONFIG | base64 -d > ./config/config.json

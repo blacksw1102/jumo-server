@@ -45,17 +45,17 @@ export default class Server {
     this.app.set("view engine", "ejs");
 
     // sassMiddleWare 설정
-    this.app.use(
-      sassMiddleWare({
-        /* Options */
-        src: path.join(__dirname, "..", "scss"),
-        dest: path.join(__dirname, "..", "static"),
-        debug: true,
-        outputStyle: "compressed",
-        prefix: "",
-        log: (severity: string, key: string, value: string) => { logger.log(severity, `node-sass-middleware ${key} : ${value}`); }
-      })
-    );
+    // this.app.use(
+    //   sassMiddleWare({
+    //     /* Options */
+    //     src: path.join(__dirname, "..", "scss"),
+    //     dest: path.join(__dirname, "..", "static"),
+    //     debug: true,
+    //     outputStyle: "compressed",
+    //     prefix: "",
+    //     log: (severity: string, key: string, value: string) => { logger.log(severity, `node-sass-middleware ${key} : ${value}`); }
+    //   })
+    // );
   }
 
   private initRouter() {
@@ -65,6 +65,6 @@ export default class Server {
     this.app.use("/user", new UserRouter().getRouter());
     this.app.use("/search", new SearchRouter().getRouter());
     this.app.use("/restaurant", new RestaurantRouter().getRouter());
-    this.app.use(new DevRouter().getRouter());
+    this.app.use("/dev", new DevRouter().getRouter());
   }
 }

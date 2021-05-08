@@ -12,9 +12,10 @@ export default class RestaurantRouter {
 
     /* 검색 */
     this.Router.get("/search-result", (req, res, next) => {
-      const keyword: string = req.query.keyword as string;
+      const keyword: string = req.query.keyword as string || "";
+      const category: string = req.query.category as string || "";
 
-      RestaurantDAO.getSearchResult(keyword).then((result) => {
+      RestaurantDAO.getSearchResult(keyword, category).then((result) => {
         res.json(result);
       });
     });
