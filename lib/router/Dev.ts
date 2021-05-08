@@ -27,7 +27,9 @@ export default class AuthRouter {
         (err, data) => {
           if (err) {
             logger.error(err.toString());
+            res.status(400);
           }
+          res.setHeader("Content-Type", "text/plain");
           res.status(200).send(data);
         }
       );
