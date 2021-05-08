@@ -22,12 +22,15 @@ export default class AuthRouter {
 
     /* 웹 로그 */
     this.Router.get("/log", (req, res) => {
-      fs.readFile("~/.pm2/logs/index-out.log", (err, data) => {
-        if(err) {
-          logger.error(err);
+      fs.readFile(
+        "/home/gitlab-runner/.pm2/logs/index-out.log",
+        (err, data) => {
+          if (err) {
+            logger.error(err.toString());
+          }
+          res.status(200).send(data);
         }
-        res.status(200).send(data);
-      });
+      );
     });
   }
 
