@@ -45,17 +45,17 @@ export default class Server {
     this.app.set("view engine", "ejs");
 
     // sassMiddleWare 설정
-    // this.app.use(
-    //   sassMiddleWare({
-    //     /* Options */
-    //     src: path.join(__dirname, "..", "scss"),
-    //     dest: path.join(__dirname, "..", "static"),
-    //     debug: true,
-    //     outputStyle: "compressed",
-    //     prefix: "",
-    //     log: (severity: string, key: string, value: string) => { logger.log(severity, `node-sass-middleware ${key} : ${value}`); }
-    //   })
-    // );
+    this.app.use(
+      sassMiddleWare({
+        /* Options */
+        src: path.join(__dirname, "..", "scss"),
+        dest: path.join(__dirname, "..", "static"),
+        debug: true,
+        outputStyle: "compressed",
+        prefix: "/css",
+        log: (severity: string, key: string, value: string) => { logger.log(severity, `node-sass-middleware ${key} : ${value}`); }
+      })
+    );
   }
 
   private initRouter() {
