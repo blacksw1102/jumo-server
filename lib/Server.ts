@@ -45,7 +45,7 @@ export default class Server {
   }
 
   private initRouter() {
-    this.app.use(express.static("static"));
+    this.app.use(express.static(path.join(__dirname, "..", "static")));
     this.app.use(new WebServer().getRouter());
     this.app.use(new AuthRouter().getRouter());
     this.app.use("/user", new UserRouter().getRouter());
