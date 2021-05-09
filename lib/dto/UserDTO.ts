@@ -21,3 +21,22 @@ export class UserDTO {
         this.birth_date = birth_date;
     }
 }
+
+export class UserSigninDTO {
+    public accessToken: string;
+    public refreshToken: string;
+    public userId: string;
+    public userName: string;
+
+    constructor(
+        accessToken: string, 
+        refreshToken: string, 
+        userId: string, 
+        userName: string
+    ) {
+        this.accessToken = accessToken
+        this.refreshToken = refreshToken
+        this.userId = userId
+        this.userName = userName
+    }
+}

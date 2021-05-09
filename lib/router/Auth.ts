@@ -1,7 +1,12 @@
 import express from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
+
+import UserDAO from "../dao/UserDAO";
+import logger from "../logger";
+import DB from "../DB";
 import Config from "../Config";
+import { UserSigninDTO } from "../dto/UserDTO";
 
 export default class AuthRouter {
   private Router: express.Router;
@@ -22,17 +27,28 @@ export default class AuthRouter {
           if (err) {
             next(err);
           }
-          const accessToken = jwt.sign(
-            { id: user },
-            Config.getInstance().server.jwtAccessTokenSecret,
-            { expiresIn: Config.getInstance().server.jwtAccessTokenExpire }
-          );
-          const refreshToken = jwt.sign(
-            { id: user },
-            Config.getInstance().server.jwtRefreshTokenSecret,
-            { expiresIn: Config.getInstance().server.jwtRefreshTokenExpire }
-          );
-          return res.status(200).json({ accessToken, refreshToken });
+
+          UserDAO.getUserById(user).then((data) => {
+            const accessToken = jwt.sign(
+              { id: data.id },
+              Config.getInstance().server.jwtAccessTokenSecret,
+              {
+                expiresIn: Config.getInstance().server.jwtAccessTokenExpire,
+              }
+            );
+            const refreshToken = jwt.sign(
+              { id: data.id },
+              Config.getInstance().server.jwtRefreshTokenSecret,
+              {
+                expiresIn: Config.getInstance().server.jwtRefreshTokenExpire,
+              }
+            );
+            const userId = data.id;
+            const userName = data.name;
+            logger.debug(JSON.stringify(data));
+            let result = new UserSigninDTO(accessToken, refreshToken, userId, userName);
+            res.status(200).json(result);
+          });
         });
       })(req, res);
     });
