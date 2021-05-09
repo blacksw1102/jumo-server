@@ -13,17 +13,8 @@ export default class AuthRouter {
     this.Router.post("/signin", AuthController.signin);
     /* AccessToken 재발급 */
     this.Router.post("/refresh", AuthController.refreshToken);
-
     /* 로그인 요청 */
-    this.Router.post(
-      "/auth",
-      passport.authenticate("local", {
-        successRedirect: "/",
-        failureRedirect: "/login",
-        failureFlash: true,
-      })
-    );
-
+    this.Router.post("/auth", AuthController.auth);
     /* 회원가입 요청 */
     this.Router.post("/signup_process", AuthController.signupProcess);
     /* 로그아웃 */

@@ -90,6 +90,14 @@ class AuthController {
             }
         )(req, res);
     }
+
+    public auth(req: Request, res: Response, next:NextFunction) {
+        passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/login",
+        failureFlash: true,
+        })(req, res);
+    }
 }
 
 export default new AuthController();
