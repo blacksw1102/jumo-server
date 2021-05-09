@@ -1,12 +1,7 @@
 import express from "express";
 import passport from "passport";
-import jwt from "jsonwebtoken";
 
-import UserDAO from "../dao/UserDAO";
-import logger from "../logger";
-import DB from "../DB";
-import Config from "../Config";
-import { UserSigninDTO } from "../dto/UserDTO";
+import AuthController from "../controller/AuthController";
 
 export default class AuthRouter {
   private Router: express.Router;
@@ -14,62 +9,10 @@ export default class AuthRouter {
   constructor() {
     this.Router = express.Router();
 
-    /**
-     * 로그인
-     */
-    this.Router.post("/signin", (req, res, next) => {
-      passport.authenticate("local", { session: false }, (err, user) => {
-        if (err || !user) {
-          return res.status(400).end();
-        }
-
-        req.login(user, { session: false }, (err) => {
-          if (err) {
-            next(err);
-          }
-
-          UserDAO.getUserById(user).then((data) => {
-            const accessToken = jwt.sign(
-              { id: data.id },
-              Config.getInstance().server.jwtAccessTokenSecret,
-              {
-                expiresIn: Config.getInstance().server.jwtAccessTokenExpire,
-              }
-            );
-            const refreshToken = jwt.sign(
-              { id: data.id },
-              Config.getInstance().server.jwtRefreshTokenSecret,
-              {
-                expiresIn: Config.getInstance().server.jwtRefreshTokenExpire,
-              }
-            );
-            const userId = data.id;
-            const userName = data.name;
-            logger.debug(JSON.stringify(data));
-            let result = new UserSigninDTO(accessToken, refreshToken, userId, userName);
-            res.status(200).json(result);
-          });
-        });
-      })(req, res);
-    });
-
-    /**
-     * Access Token 재발급
-     */
-    this.Router.post("/refresh", (req, res, next) => {
-      passport.authenticate(
-        "refresh-jwt",
-        { session: false },
-        (err, user) => {
-          const accessToken = jwt.sign(
-            { id: user },
-            Config.getInstance().server.jwtAccessTokenSecret,
-            { expiresIn: Config.getInstance().server.jwtAccessTokenExpire }
-          );
-          res.status(200).json({ accessToken });
-        }
-      )(req, res);
-    });
+    /* 로그인 */
+    this.Router.post("/signin", AuthController.signin);
+    /* AccessToken 재발급 */
+    this.Router.post("/refresh", AuthController.refreshToken);
 
     /* 로그인 요청 */
     this.Router.post(
@@ -81,52 +24,10 @@ export default class AuthRouter {
       })
     );
 
-    /* 회원가입 폼 (테스트용 샘플) */
-    this.Router.get("/signup", (req, res) => {
-      let html: string = `
-                <!doctype html>
-                <html>
-                <head>
-                <title>회원가입</title>
-                <meta charset="utf-8">
-                </head>
-                <body>
-                    <form action="/signup_process" method="post">
-                        <p><input type="text" name="id" placeholder="email"></p>
-                        <p><input type="password" name="pw" placeholder="password"></p>
-                        <p><input type="text" name="name" placeholder="name"></p>
-                        <p><input type="text" name="tel" placeholder="tel"></p>
-                        <p><input type="submit" value="submit"></p>
-                    </form>
-                </body>
-                </html>`;
-      res.end(html);
-    });
-
     /* 회원가입 요청 */
-    this.Router.post("/signup_process", (req, res, next) => {
-      return passport.authenticate(
-        "local-signup",
-        {
-          successRedirect: "/",
-          failureRedirect: "/signup",
-          failureFlash: true,
-        },
-        (err, user) => {
-          if (user === "1062") {
-            res.status(400).json({ ok: false });
-          } else {
-            res.status(200).json({ ok: true });
-          }
-        }
-      )(req, res);
-    });
-
+    this.Router.post("/signup_process", AuthController.signupProcess);
     /* 로그아웃 */
-    this.Router.get("/logout", (req, res) => {
-      req.logout();
-      res.redirect("/");
-    });
+    this.Router.get("/logout", AuthController.logout);
   }
 
   public getRouter(): express.Router {
