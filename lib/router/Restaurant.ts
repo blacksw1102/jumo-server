@@ -10,16 +10,6 @@ export default class RestaurantRouter {
   constructor() {
     this.Router = express.Router();
 
-    /* 검색 */
-    this.Router.get("/search-result", (req, res, next) => {
-      const keyword: string = req.query.keyword as string || "";
-      const category: string = req.query.category as string || "";
-
-      RestaurantDAO.getSearchResult(keyword, category).then((result) => {
-        res.json(result);
-      });
-    });
-
     this.Router.get("/:id", async (req, res, next) => {
       let token: string = req.headers.authorization?.split('Bearer ')[1] || "";
       let userId: string = "";
