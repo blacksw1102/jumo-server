@@ -2,6 +2,17 @@
 @import "./component/buttons.scss";
 @import "./component/txtbox.scss";
 
+
+
+
+
+.input-area {
+    padding-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+
 .txtbox-wrapper {
     position:relative;
 
@@ -45,3 +56,6 @@
     top: 0;
     left: 0;
 }
+
+
+
