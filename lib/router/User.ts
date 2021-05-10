@@ -1,11 +1,7 @@
 import express from "express";
 import passport from "passport";
 
-import logger from "../logger";
-
-import UserDAO from "../dao/UserDAO";
-import OrderDAO from "../dao/OrderDAO";
-import FavoriteDAO from "../dao/FavoriteDAO";
+import UserController from "../controller/UserController";
 
 export default class User {
     private Router: express.Router;
@@ -13,27 +9,9 @@ export default class User {
     constructor() {
         this.Router = express.Router();
 
-        this.Router.get("/:userId/favorites", passport.authenticate("jwt", { session: false }), (req, res, next) => {
-            if (req.user !== req.params.userId) {
-                logger.warn(`${req.user} doesn't have access to ${req.params.userId}`)
-                res.status(400).json();
-            }
-            FavoriteDAO.getFavoriteListByUserId(req.params.userId).then(data => {
-                logger.debug(JSON.stringify(data));
-                res.status(200).json(data);
-            });
-        });
+        this.Router.get("/:userId/favorites", passport.authenticate("jwt", { session: false }), UserController.getFavroites);
 
-        this.Router.get("/:userId/orders", passport.authenticate("jwt", { session: false }), (req, res, next) => {
-            if (req.user !== req.params.userId) {
-                logger.warn(`${req.user} doesn't have access to ${req.params.userId}`)
-                res.status(400).json();
-            }
-            OrderDAO.getOrderListByUserId(req.params.userId).then(data => {
-                logger.debug(JSON.stringify(data, null, 4));
-                res.status(200).json(data);
-            })
-        });
+        this.Router.get("/:userId/orders", passport.authenticate("jwt", { session: false }), UserController.getOrders);
     }
 
     public getRouter(): express.Router {
