@@ -1,26 +1,22 @@
 @import "init.scss";
 @import "./component/buttons.scss";
 @import "./component/txtbox.scss";
+@import "./component/frame.scss";
 
 
-
-img {
-    min-width: 120px;
-    min-height: 180px;
-    width: 36vmin;
-    height: 46vmin;
-    
-    .jumo-logo & {
-      min-width: 180px;
-      min-height: 90px;
-      width: 46vmin;
-      height: 23vmin;
-    }
-  }
 
 .header-left{
-    margin-left: 0.1em;
-    width: 0.1em;
+    @extend .frame;
+
+    background-color: yellow;
+    width: 100px;
+    height: 100px;
+    color: yellow;
 }
 
-
+.header-right{
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    color: red;
+}
