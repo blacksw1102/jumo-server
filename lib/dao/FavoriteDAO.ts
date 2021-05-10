@@ -40,7 +40,8 @@ class FavoriteDAO {
                             item.order_cnt
                         );
                     });
-
+                    logger.debug(JSON.stringify(data));
+                    conn.release();
                     resolve(result);
                 });
             });

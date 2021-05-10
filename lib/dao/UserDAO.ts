@@ -1,4 +1,5 @@
-import { UserDTO } from "../dto/UserDTO";
+import { UserDTO, UserSigninDTO } from "../dto/UserDTO";
+import jwt from "jsonwebtoken";
 
 import logger from "../logger";
 import DB from "../DB";
@@ -13,7 +14,6 @@ class UserDAO {
         }
         conn.query("SELECT * FROM user WHERE id=?", [userId], (err, data) => {
           let user = new UserDTO(data[0].id, data[0].name, data[0].pw, data[0].salt, data[0].tel, data[0].profile_image, data[0].point, data[0].usercol, data[0].birth_date);
-          conn.release();
 
           if (err) {
             logger.error(`[Failed] ${userId} : DataBase Error`);
@@ -21,6 +21,7 @@ class UserDAO {
           if (!user) {
             logger.info(`[Failed] ${userId} : Wrong Id`);
           }
+          conn.release();
           resolve(user);
         });
       });
@@ -40,6 +41,7 @@ class UserDAO {
             if (err) {
               reject(err);
             }
+            conn.release();
             resolve(user.id);
           });
       });

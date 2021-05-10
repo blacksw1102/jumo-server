@@ -41,42 +41,99 @@ class RestaurantDAO {
     });
   }
 
-  getSearchResult(keyword: string): Promise<RestaurantSearchResultDTO[]> {
+  getSearchResult(
+    keyword: string,
+    category: string
+  ): Promise<RestaurantSearchResultDTO[]> {
     return new Promise((resolve, reject) => {
       DB.getPool().getConnection((err, conn) => {
+        let query = `SELECT res.*, (SELECT COUNT(*) FROM review WHERE company_no = res.company_no) AS review_cnt
+          FROM restaurant res`;
         // DB 에러 처리
         if (err) {
-          logger.error(err);
+          logger.error(err.toString());
         }
 
-        conn.query(
-          "SELECT res.*, (SELECT COUNT(*) FROM review WHERE company_no = res.company_no) AS review_cnt FROM restaurant res WHERE res.name LIKE ?",
-          [`%${keyword}%`],
-          (err, data) => {
-            if (err) {
-              logger.error(err);
-              resolve([]);
-            }
+        if (keyword === "") {
+          `res.name LIKE ?`;
+        }
 
-            let result = data.map((item: any) => {
-              return new RestaurantSearchResultDTO(
-                item.name,
-                item.score,
-                item.profile_image,
-                item.description,
-                item.average_cooking_time,
-                item.review_cnt
-              );
-            });
-
-            // 확인용 로그
-            logger.debug(JSON.stringify(data));
-            conn.release();
-            resolve(result);
+        conn.query(this.makeSearchListQuery(keyword, category), this.makeSearchListQueryVariable(keyword, category), (err, data) => {
+          if (err) {
+            logger.error(err.toString());
+            resolve([]);
           }
-        );
+
+          let result = data.map((item: any) => {
+            return new RestaurantSearchResultDTO(
+              item.company_no,
+              item.name,
+              item.score,
+              item.profile_image,
+              item.description,
+              item.average_cooking_time,
+              item.review_cnt,
+              item.review_score_avg,
+              item.order_cnt
+            );
+          });
+
+          // 확인용 로그
+          logger.debug(JSON.stringify(data));
+          conn.release();
+          resolve(result);
+        });
       });
     });
+  }
+
+  private makeSearchListQuery(keyword: string, category: string) {
+    // let query = `SELECT res.*, (SELECT COUNT(*) FROM review WHERE company_no = res.company_no) AS review_cnt
+    //           FROM restaurant res`;
+
+    let query = `
+      SELECT res.*, COUNT(rev.orders_id) AS review_cnt, COUNT(ord.id) AS order_cnt, IFNULL(AVG(rev.score), 0) AS review_score_avg
+        FROM restaurant res
+        LEFT JOIN orders ord ON ord.company_no = res.company_no
+        LEFT JOIN review rev ON ord.id = rev.orders_id
+    `;
+    let whereList = [];
+    if (keyword !== "") {
+      whereList.push(`res.name LIKE ?`);
+    }
+    if (category !== "") {
+      whereList.push(`res.category_name = ?`);
+    }
+
+    if(whereList.length > 0) {
+      query += ' WHERE ';
+      query += whereList.shift();
+    }
+
+    while(whereList.length > 0) {
+      query += " AND ";
+      query += whereList.shift();
+    }
+
+    query += " GROUP BY res.company_no";
+
+    logger.debug(query);
+
+    return query;
+  }
+
+  private makeSearchListQueryVariable(keyword: string, category: string) {
+    let result = [];
+
+    if (keyword !== "") {
+      result.push(`%${keyword}%`);
+    }
+    if(category !== "") {
+      result.push(`${category}`);
+    }
+
+    logger.debug(result);
+    return result;
   }
 
   public getRestaurantInfo(userId: string, companyNo: string) {
@@ -116,7 +173,17 @@ class RestaurantDAO {
 
             let result = data.map((item: any) => {
               return new RestaurantInfoDTO(
-                item.company_no, item.name, item.address_base, item.address_detail, item.profile_image, item.description, item.user_id, item.category_name, item.review_cnt, item.review_score_avg, item.is_fav
+                item.company_no,
+                item.name,
+                item.address_base,
+                item.address_detail,
+                item.profile_image,
+                item.description,
+                item.user_id,
+                item.category_name,
+                item.review_cnt,
+                item.review_score_avg,
+                item.is_fav
               );
             });
 
