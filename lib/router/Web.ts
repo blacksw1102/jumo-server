@@ -29,6 +29,10 @@ export default class WebRouter {
         this.Router.get("/register", (req, res, next) => {
             res.render("register.ejs", {}, renderFunction(res));
         });
+
+        this.Router.get("/main", (req, res, next) => {
+            res.render("main.ejs", {}, renderFunction(res));
+        });
     }
 
     public getRouter(): express.Router {

@@ -1,0 +1,22 @@
+@import "init.scss";
+@import "./component/buttons.scss";
+@import "./component/txtbox.scss";
+
+.header{
+    display: flex;
+
+}
+
+img{
+    .jumo-logo {
+        justify-content: left;
+        width: 10%;
+        height: 10%;
+        object-fit: cover;
+    }
+        
+}
+
+
+
+

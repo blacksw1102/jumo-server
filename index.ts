@@ -33,5 +33,6 @@ async function main() {
 sassInit("style");
 sassInit("login_style");
 sassInit("register_style");
+sassInit("main_style");
 
 main();
