@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
-import fs from "fs";
-import logger from "../logger";
+
+import DevController from "../controller/DevController";
 
 export default class AuthRouter {
   private Router: express.Router;
@@ -10,30 +10,13 @@ export default class AuthRouter {
     this.Router = express.Router();
 
     /* 로그인 영역 */
-    this.Router.get("/quit", (req, res) => {
-      res.end("Server Closed");
-      process.exit();
-    });
+    this.Router.get("/quit", DevController.quitServer);
 
     /* 테스트 요청 */
-    this.Router.post("/test", passport.authenticate("jwt", { session: false }), (req, res) => {
-      res.status(200).json({ data: "Test", id: req.user });
-    });
+    this.Router.post("/test", passport.authenticate("jwt", { session: false }), DevController.testJWT);
 
     /* 웹 로그 */
-    this.Router.get("/log", (req, res) => {
-      fs.readFile(
-        "/home/gitlab-runner/.pm2/logs/index-out.log",
-        (err, data) => {
-          if (err) {
-            logger.error(err.toString());
-            res.status(400);
-          }
-          res.setHeader("Content-Type", "text/plain; charset=utf-8");
-          res.status(200).send(data);
-        }
-      );
-    });
+    this.Router.get("/log", DevController.getLog);
   }
 
   public getRouter(): express.Router {
