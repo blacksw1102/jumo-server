@@ -2,21 +2,25 @@
 @import "./component/buttons.scss";
 @import "./component/txtbox.scss";
 
-.header{
-    display: flex;
 
-}
 
-img{
-    .jumo-logo {
-        justify-content: left;
-        width: 10%;
-        height: 10%;
-        object-fit: cover;
+img {
+    min-width: 120px;
+    min-height: 180px;
+    width: 36vmin;
+    height: 46vmin;
+    
+    .jumo-logo & {
+      min-width: 180px;
+      min-height: 90px;
+      width: 46vmin;
+      height: 23vmin;
     }
-        
+  }
+
+.header-left{
+    margin-left: 0.1em;
+    width: 0.1em;
 }
-
-
 
 
