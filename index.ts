@@ -3,7 +3,9 @@ import Config from "./lib/Config";
 import DB from "./lib/DB";
 import Passport from "./lib/Passport";
 import passport from "passport";
+
 import logger from "./lib/logger";
+import sassInit from "./lib/SassInit";
 
 import User from "./lib/User";
 
@@ -27,6 +29,9 @@ async function main() {
   });
 }
 
+/* 스타일 */
+sassInit("style");
+sassInit("login_style");
+sassInit("register_style");
+
 main();
-
-

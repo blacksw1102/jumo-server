@@ -1,4 +1,5 @@
 export class RestaurantSearchResultDTO {
+    companyNo: string;
     name: string;
     score: number;
     image: string;
@@ -9,6 +10,7 @@ export class RestaurantSearchResultDTO {
     orderCount: number;
 
     constructor(
+        companyNo: string,
         name: string, 
         score: number, 
         image: string, 
@@ -18,6 +20,7 @@ export class RestaurantSearchResultDTO {
         reviewAvgScore: number, 
         orderCount: number
     ) {
+        this.companyNo = companyNo;;
         this.name = name
         this.score = score
         this.image = image

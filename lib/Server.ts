@@ -5,7 +5,6 @@ import morgan, { Options as MorganOptions } from "morgan";
 import passport from "passport";
 import flash from "connect-flash";
 import moment from "moment-timezone";
-import sassMiddleWare from "node-sass-middleware";
 import logger, { webLogStream } from "./logger";
 
 import WebServer from "./router/Web";
@@ -43,23 +42,10 @@ export default class Server {
 
     // EJS View 설정
     this.app.set("view engine", "ejs");
-
-    // sassMiddleWare 설정
-    // this.app.use(
-    //   sassMiddleWare({
-    //     /* Options */
-    //     src: path.join(__dirname, "..", "scss"),
-    //     dest: path.join(__dirname, "..", "static"),
-    //     debug: true,
-    //     outputStyle: "compressed",
-    //     prefix: "",
-    //     log: (severity: string, key: string, value: string) => { logger.log(severity, `node-sass-middleware ${key} : ${value}`); }
-    //   })
-    // );
   }
 
   private initRouter() {
-    this.app.use(express.static("static"));
+    this.app.use(express.static(path.join(__dirname, "..", "static")));
     this.app.use(new WebServer().getRouter());
     this.app.use(new AuthRouter().getRouter());
     this.app.use("/user", new UserRouter().getRouter());
