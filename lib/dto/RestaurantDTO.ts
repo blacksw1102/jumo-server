@@ -74,17 +74,113 @@ export class RestaurantInfoDTO {
 }
 
 export class RestaurantTopAreaDTO {
+    companyId: string;
+    restaurantName: string;
+    profileImage: string;
+    favCnt: number;
+    reviewAvg: number;
+    reivewCnt: number;
 
+    constructor(
+        companyId: string, 
+        restaurantName: string, 
+        profileImage: string, 
+        favCnt: number, 
+        reviewAvg: number, 
+        reivewCnt: number
+    ) {
+        this.companyId = companyId
+        this.restaurantName = restaurantName
+        this.profileImage = profileImage
+        this.favCnt = favCnt
+        this.reviewAvg = reviewAvg
+        this.reivewCnt = reivewCnt
+    }
 }
 
 export class RestaurantMenuTabDTO {
 
 }
 
-export class RestaurantReviewTabDTO {
+export class RestaurantMenu {
+    menuId: number;
+    menuName: string;
+    menuPrice: number;
+    menuImage: string;
+    avgCookTime: string;
 
+
+    constructor(
+        menuId: number, 
+        menuName: string, 
+        menuPrice: number, 
+        menuImage: string, 
+        avgCookTime: string
+    ) {
+        this.menuId = menuId
+        this.menuName = menuName
+        this.menuPrice = menuPrice
+        this.menuImage = menuImage
+        this.avgCookTime = avgCookTime
+    }
+}
+
+export class RestaurantReviewTabDTO {
+    reviewImage: string;
+    score: number;
+    userName: string;
+    reviewDate: string;
+    reviewBody: string;
+    menuList: string[];
+
+
+    constructor(
+        reviewImage: string, 
+        score: number, 
+        userName: string, 
+        reviewDate: string, 
+        reviewBody: string, 
+        menuList: string[]
+    ) {
+        this.reviewImage = reviewImage
+        this.score = score
+        this.userName = userName
+        this.reviewDate = reviewDate
+        this.reviewBody = reviewBody
+        this.menuList = menuList
+    }
 }
 
 export class RestaurantInfoTabDTO {
+    restaurantDescription: string;
+    restaurantName: string;
+    restaurantOpTime: string;
+    restaurantClosedDay: string;
+    restaurantPhoneNum: string;
+    ownerName: string;
+    companyNo: string;
+    address1: string;
+    address2: string;
 
+    constructor(
+        restaurantDescription: string, 
+        restaurantName: string, 
+        restaurantOpTime: string, 
+        restaurantClosedDay: string, 
+        restaurantPhoneNum: string, 
+        ownerName: string, 
+        companyNo: string, 
+        address1: string, 
+        address2: string
+    ) {
+        this.restaurantDescription = restaurantDescription
+        this.restaurantName = restaurantName
+        this.restaurantOpTime = restaurantOpTime
+        this.restaurantClosedDay = restaurantClosedDay
+        this.restaurantPhoneNum = restaurantPhoneNum
+        this.ownerName = ownerName
+        this.companyNo = companyNo
+        this.address1 = address1
+        this.address2 = address2
+    }
 }

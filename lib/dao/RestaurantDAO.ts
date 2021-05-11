@@ -2,7 +2,7 @@ import { RestaurantSearchResultDTO, RestaurantInfoDTO } from "../dto/RestaurantD
 
 import DB from "../DB";
 import logger from "../logger";
-
+import util from "util";
 class RestaurantDAO {
   create(
     name: string,
@@ -136,8 +136,16 @@ class RestaurantDAO {
     return result;
   }
 
-  public getRestaurantTopAreaInfo(companyNo: string) {
-    
+  public async getRestaurantTopArea(companyNo: string) {
+    const getDBConn = util.promisify(DB.getPool().getConnection);
+
+    try {
+      const conn = await getDBConn();
+
+      // conn.query()
+    } catch(e) {
+      logger.info(e.toString);
+    }
   }
 
   public getRestaurantInfo(userId: string, companyNo: string) {
