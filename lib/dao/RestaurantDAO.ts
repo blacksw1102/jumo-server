@@ -136,6 +136,10 @@ class RestaurantDAO {
     return result;
   }
 
+  public getRestaurantTopAreaInfo(companyNo: string) {
+    
+  }
+
   public getRestaurantInfo(userId: string, companyNo: string) {
     return new Promise((resolve, reject) => {
       DB.getPool().getConnection((err, conn) => {

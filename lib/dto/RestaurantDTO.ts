@@ -71,5 +71,20 @@ export class RestaurantInfoDTO {
         this.reviewAvg = reviewAvg
         this.isFav = isFav
     }
+}
+
+export class RestaurantTopAreaDTO {
+
+}
+
+export class RestaurantMenuTabDTO {
+
+}
+
+export class RestaurantReviewTabDTO {
+
+}
+
+export class RestaurantInfoTabDTO {
 
 }
