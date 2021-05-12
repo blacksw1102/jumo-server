@@ -10,14 +10,19 @@ class RestaurantController {
     let userId: string = "";
 
     if (token !== "") {
-        let payload = jwt.verify(
-            token,
-            Config.getInstance().server.jwtAccessTokenExpire
-        );
-        console.debug(JSON.stringify(payload));
+      let payload = jwt.verify(
+        token,
+        Config.getInstance().server.jwtAccessTokenExpire
+      );
+      console.debug(JSON.stringify(payload));
     }
 
     let result = await RestaurantDAO.getRestaurantInfo(userId, req.params.id);
+    res.status(200).json(result);
+  }
+
+  public async getRestaurantTopArea(req: Request, res: Response, next: NextFunction) {
+    let result = await RestaurantDAO.getRestaurantTopArea(req.params.id);
     res.status(200).json(result);
   }
 }

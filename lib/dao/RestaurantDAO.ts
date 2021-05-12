@@ -1,4 +1,4 @@
-import { RestaurantSearchResultDTO, RestaurantInfoDTO } from "../dto/RestaurantDTO";
+import { RestaurantSearchResultDTO, RestaurantInfoDTO, RestaurantTopAreaDTO } from "../dto/RestaurantDTO";
 
 import DB from "../DB";
 import logger from "../logger";
@@ -105,12 +105,12 @@ class RestaurantDAO {
       whereList.push(`res.category_name = ?`);
     }
 
-    if(whereList.length > 0) {
+    if (whereList.length > 0) {
       query += ' WHERE ';
       query += whereList.shift();
     }
 
-    while(whereList.length > 0) {
+    while (whereList.length > 0) {
       query += " AND ";
       query += whereList.shift();
     }
@@ -128,7 +128,7 @@ class RestaurantDAO {
     if (keyword !== "") {
       result.push(`%${keyword}%`);
     }
-    if(category !== "") {
+    if (category !== "") {
       result.push(`${category}`);
     }
 
@@ -136,16 +136,45 @@ class RestaurantDAO {
     return result;
   }
 
-  public async getRestaurantTopArea(companyNo: string) {
-    const getDBConn = util.promisify(DB.getPool().getConnection);
+  public getRestaurantTopArea(companyNo: string) {
+    return new Promise((resolve, reject) => {
+      DB.getPool().getConnection((err, conn) => {
+        // DB 에러 처리
+        if (err) {
+          logger.error(err.toString());
+        }
 
-    try {
-      const conn = await getDBConn();
+        conn.query(
+          `
+          SELECT res.company_no,
+                res.name,
+                res.profile_image,
+                COUNT(f.company_no) as favorite_cnt,
+                COUNT(r.score) as review_cnt,
+                IFNULL(AVG(r.score), 0) as review_avg
+              FROM restaurant res
+              LEFT JOIN favorite f on res.company_no = f.company_no
+              LEFT JOIN orders o on res.company_no = o.company_no
+              LEFT JOIN review r on o.id = r.orders_id
+          WHERE res.company_no = ?
+          GROUP BY res.company_no
+          `,
+          [companyNo],
+          (err, data) => {
+            if (err) {
+              logger.error(err.toString());
+            }
 
-      // conn.query()
-    } catch(e) {
-      logger.info(e.toString);
-    }
+            let result = data.map((item: any) => {
+              return new RestaurantTopAreaDTO(item.company_no, item.name, item.profile_image, item.fav_cnt, item.review_avg, item.review_cnt)
+            });
+
+            conn.release();
+            resolve(result);
+          }
+        );
+      });
+    });
   }
 
   public getRestaurantInfo(userId: string, companyNo: string) {

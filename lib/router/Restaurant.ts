@@ -7,6 +7,7 @@ export default class RestaurantRouter {
     this.Router = express.Router();
 
     this.Router.get("/:id", RestaurantController.getRestaurantInfo);
+    this.Router.get("/top/:id", RestaurantController.getRestaurantTopArea);
   }
 
   public getRouter(): express.Router {
