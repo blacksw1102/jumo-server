@@ -1,3 +1,5 @@
+import Restaurant from "../Restaurant";
+
 export class RestaurantSearchResultDTO {
     companyNo: string;
     name: string;
@@ -11,13 +13,13 @@ export class RestaurantSearchResultDTO {
 
     constructor(
         companyNo: string,
-        name: string, 
-        score: number, 
-        image: string, 
-        description: string, 
-        averageCooking_time: string, 
-        reviewCount: number, 
-        reviewAvgScore: number, 
+        name: string,
+        score: number,
+        image: string,
+        description: string,
+        averageCooking_time: string,
+        reviewCount: number,
+        reviewAvgScore: number,
         orderCount: number
     ) {
         this.companyNo = companyNo;;
@@ -82,11 +84,11 @@ export class RestaurantTopAreaDTO {
     reivewCnt: number;
 
     constructor(
-        companyId: string, 
-        restaurantName: string, 
-        profileImage: string, 
-        favCnt: number, 
-        reviewAvg: number, 
+        companyId: string,
+        restaurantName: string,
+        profileImage: string,
+        favCnt: number,
+        reviewAvg: number,
         reivewCnt: number
     ) {
         this.companyId = companyId
@@ -99,7 +101,13 @@ export class RestaurantTopAreaDTO {
 }
 
 export class RestaurantMenuTabDTO {
+    popMenu: RestaurantMenu[];
+    menu: RestaurantMenu[];
 
+    constructor(popMenu: RestaurantMenu[], menu: RestaurantMenu[]) {
+        this.popMenu = popMenu
+        this.menu = menu
+    }
 }
 
 export class RestaurantMenu {
@@ -111,10 +119,10 @@ export class RestaurantMenu {
 
 
     constructor(
-        menuId: number, 
-        menuName: string, 
-        menuPrice: number, 
-        menuImage: string, 
+        menuId: number,
+        menuName: string,
+        menuPrice: number,
+        menuImage: string,
         avgCookTime: string
     ) {
         this.menuId = menuId
@@ -135,11 +143,11 @@ export class RestaurantReviewTabDTO {
 
 
     constructor(
-        reviewImage: string, 
-        score: number, 
-        userName: string, 
-        reviewDate: string, 
-        reviewBody: string, 
+        reviewImage: string,
+        score: number,
+        userName: string,
+        reviewDate: string,
+        reviewBody: string,
         menuList: string[]
     ) {
         this.reviewImage = reviewImage
@@ -163,14 +171,14 @@ export class RestaurantInfoTabDTO {
     address2: string;
 
     constructor(
-        restaurantDescription: string, 
-        restaurantName: string, 
-        restaurantOpTime: string, 
-        restaurantClosedDay: string, 
-        restaurantPhoneNum: string, 
-        ownerName: string, 
-        companyNo: string, 
-        address1: string, 
+        restaurantDescription: string,
+        restaurantName: string,
+        restaurantOpTime: string,
+        restaurantClosedDay: string,
+        restaurantPhoneNum: string,
+        ownerName: string,
+        companyNo: string,
+        address1: string,
         address2: string
     ) {
         this.restaurantDescription = restaurantDescription
