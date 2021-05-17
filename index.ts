@@ -30,8 +30,6 @@ async function main() {
 }
 
 /* 스타일 */
-sassInit("style");
-sassInit("login_style");
-sassInit("register_style");
+sassInit();
 
 main();
