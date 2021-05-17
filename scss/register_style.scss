@@ -71,14 +71,14 @@ section {
     
 }
 
-.btn-box {
+.id-area {
+    display: flex;
+    flex-direction: row;
 
-    margin-bottom: 10px;
-    padding-bottom: 1em;
-    
+    & > * {
+        margin-bottom: 0.8em;
+    }
 }
-
-
 
 .jumo-logo {
     justify-content: center;
