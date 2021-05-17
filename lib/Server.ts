@@ -29,7 +29,7 @@ export default class Server {
     };
     this.app.use(
       morgan(
-        ":remote-addr :method :url :status :res[content-length] - :response-time ms",
+        ":req[X-Real-IP] :method :url :status :res[content-length] - :response-time ms",
         morganOption
       )
     );
