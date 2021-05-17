@@ -17,6 +17,9 @@ export default class AuthRouter {
 
     /* 웹 로그 */
     this.Router.get("/log", DevController.getLog);
+
+    /* Sass */
+    this.Router.get("/sass", DevController.sassExec);
   }
 
   public getRouter(): express.Router {
