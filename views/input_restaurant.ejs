@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <%-include("head") %>
+    <title>JUMO 회원가입</title>
+    <link rel="stylesheet" type="text/css" href="/register_style.css" />
+</head>
+<body>
+    <header></header>
+    <section>
+        <div class="register-area" >
+            <form method="POST" action="/register_pro">
+                <div class="register-location">
+                    <img class="jumo-logo" src="/jumo-logo.svg" />
+                    <input id="txtId" class="txtbox-simple" placeholder="사업자등록번호"/>                 
+                    <input class="txtbox-simple" placeholder="가게 명" />
+                    <input class="txtbox-simple" placeholder="기본주소" />
+                    <input class="txtbox-simple" placeholder="상세주소" />
+                    <input class="txtbox-simple" placeholder="이미지등록?" />
+                    <input class="txtbox-simple" placeholder="운영시간" />
+                    <input class="txtbox-simple" placeholder="휴무일" />
+                    <input class="txtbox-simple" placeholder="가게소개" />
+                    <form>
+                        <select class="txtbox-simple" name="category_name">
+                            <option value="한식">한식</option>
+                            <option value="한식">한식</option>
+                            <option value="한식">분식</option>
+                            <option value="한식">일식</option>
+                            <option value="한식">카페</option>
+                            <option value="한식">중식</option>
+                            <option value="한식">양식</option>
+                            <option value="한식">치킨</option>
+                            <option value="한식">피자</option>
+                            <option value="한식">햄버거</option>
+                            <option value="한식">족발</option>
+                            <option value="한식">찜탕</option>
+                            <option value="한식">도시락</option>
+                        </select>
+                    </form>
+                        
+                    <div class="button-list">
+                        <input class="btn-box" type="submit" value="가게등록" />
+                        <a class="btn-box" href="">취소</a>
+                    </div>
+                </div>
+
+        </div>
+    </section>
+    <footer></footer>
+</body>
+</html>

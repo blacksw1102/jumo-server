@@ -12,6 +12,7 @@ export default function sassInit() {
   sassExec("style");
   sassExec("login_style");
   sassExec("register_style");
+  sassExec("input_restaurant_style");
 }
 
 function sassExec(filename: string) {
