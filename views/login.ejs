@@ -9,17 +9,20 @@
     <header></header>
     <section>
         <div class="login-frame">
-            <img class="jumo-logo" src="/jumo-logo.svg" />
-            <div class="input-area">
-                <input id="txtId" class="txtbox-simple" placeholder="아이디" tabindex="1"/>
-                <input id="txtPw" class="txtbox-simple" placeholder="비밀번호" type="password" tabindex="2" />
-            </div>
+            <form method="POST" action="/login_pro">
+                <img class="jumo-logo" src="/jumo-logo.svg" />
+                <div class="input-area">
+                    <input id="txtId" class="txtbox-simple" placeholder="아이디" tabindex="1"/>
+                    <input id="txtPw" class="txtbox-simple" placeholder="비밀번호" type="password" tabindex="2" />
+                </div>
 
-            <div class="button-list">
-                <a class="btn-box" href="/register" tabindex="4">회원가입</a>
-                <a class="btn-box" tabindex="3">로그인</a>
-            </div>
+                <div class="button-list">
+                    <a class="btn-box" href="/register" tabindex="4">회원가입</a>
+                    <input class="btn-box" type="submit" value="로그인" tabindex="3" />
+                </div>
+            </form>
         </div>
+        
     </section>
     <footer></footer>
 </body>
