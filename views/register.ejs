@@ -19,7 +19,8 @@
                     <input type="password" class="txtbox-simple" placeholder="비밀번호" />
                     <input type="password" class="txtbox-simple" placeholder="비밀번호 확인" />
                     <input class="txtbox-simple" placeholder="이름" />
-                    <input class="txtbox-simple" placeholder="휴대폰 번호(-제외)" />
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="txtbox-simple" maxlength="13"  placeholder="휴대폰 번호(-제외)"/>
+                    <input type="date" class="txtbox-simple" value="생년월일(-제외 ,8자리)" />
                         
                     <div class="button-list">
                         <input class="btn-box" type="submit" value="회원가입" />
