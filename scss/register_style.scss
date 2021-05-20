@@ -66,9 +66,9 @@ section {
 
 	margin-bottom: 10px;
     // padding: 20px 10px 20px 10px;
-    padding: 20px 10px;
+    padding: 40px 20px;
 
-    min-width: 400px;
+    min-width: 500px;
     margin: 0 auto;
     
 }
@@ -80,7 +80,8 @@ section {
     & > * {
         margin-bottom: 0.8em;
     }
-}
+    margin-top: 10px;
+}  
 
 .jumo-logo {
     justify-content: center;
@@ -89,6 +90,12 @@ section {
     width: 5em;
 }
 
-.btn-register {
-    margin-top: 10px;
+
+.button-list {
+    display: flex;
+    flex-direction:space-evenly;
+    column-gap: 0.5em;
+
+    margin: 2.0em 0 0 0;
+    padding-bottom: 1em;
 }
