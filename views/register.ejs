@@ -9,17 +9,17 @@
     <header></header>
     <section>
         <div class="register-area" >
-            <form method="POST" action="/register_pro">
+            <form method="POST" action="/signup_web_process">
                 <div class="register-location">
                     <img class="jumo-logo" src="/jumo-logo.svg" />
                     <div class="id-area">
-                        <input id="txtId" class="txtbox-input" placeholder="아이디"/>
+                        <input id="txtId" class="txtbox-input" placeholder="아이디" name="id" />
                         <button class="btn-box btn-dchk">중복 확인</button>
                     </div>
-                    <input type="password" class="txtbox-simple" placeholder="비밀번호" />
-                    <input type="password" class="txtbox-simple" placeholder="비밀번호 확인" />
-                    <input class="txtbox-simple" placeholder="이름" />
-                    <input class="txtbox-simple" placeholder="휴대폰 번호" />
+                    <input type="password" class="txtbox-simple" placeholder="비밀번호" name="pw" />
+                    <input type="password" class="txtbox-simple" placeholder="비밀번호 확인" name="pw2" />
+                    <input class="txtbox-simple" placeholder="이름" name="name" />
+                    <input class="txtbox-simple" placeholder="휴대폰 번호" name="tel" />
                         
                     <div class="button-list">
                         <input class="btn-box" type="submit" value="회원가입" />

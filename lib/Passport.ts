@@ -90,6 +90,10 @@ export default class Passport {
       passwordField: 'pw',
       passReqToCallback: true
     }, (req, username, password, done) => {
+      if (req.body.pw !== req.body.pw2) {
+        logger.info(`SIGNUP PW DIFF`);
+        return done(null, "1062", { message: "NOT MATCH PW" });
+      }
       User.cryptPassword(password).then((cryptResult) => {
         {
           UserDAO.insert(new UserDTO(username, req.body.name, cryptResult[0], cryptResult[1], req.body.tel, "", 0, 0, req.body.birth_date))

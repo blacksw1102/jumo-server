@@ -17,6 +17,8 @@ export default class AuthRouter {
     this.Router.post("/auth", AuthController.auth);
     /* 회원가입 요청 */
     this.Router.post("/signup_process", AuthController.signupProcess);
+    /* 웹 회원가입 요청 */
+    this.Router.post("/signup_web_process", AuthController.signupWebProcess);
     /* 로그아웃 */
     this.Router.get("/logout", AuthController.logout);
   }
