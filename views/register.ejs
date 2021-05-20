@@ -8,22 +8,25 @@
 <body>
     <header></header>
     <section>
-        <div class="register-area">
-            <div class="txtbox-wrapper">
-                <div class="txtbox-box">
-                    <input id="txtId" class="txtbox-input" />
-                    <label class="txtbox-hint" for="txtId" >아이디</label>
+        <div class="register-area" >
+            <form method="POST" action="/register_pro">
+                <div class="register-location">
+                    <img class="jumo-logo" src="/jumo-logo.svg" />
+                    <div class="id-area">
+                        <input id="txtId" class="txtbox-input" placeholder="아이디"/>
+                        <button class="btn-box btn-dchk">중복 확인</button>
+                    </div>
+                    <input type="password" class="txtbox-simple" placeholder="비밀번호" />
+                    <input type="password" class="txtbox-simple" placeholder="비밀번호 확인" />
+                    <input class="txtbox-simple" placeholder="이름" />
+                    <input class="txtbox-simple" placeholder="휴대폰 번호" />
+                        
+                    <div class="button-list">
+                        <input class="btn-box" type="submit" value="회원가입" />
+                        <a class="btn-box" href="/login">취소</a>
+                    </div>
                 </div>
-            </div>
-            <button class="btn-box">중복 확인</button>
-            <input type="password" class="txtbox-simple" placeholder="비밀번호" />
-            <input type="password" class="txtbox-simple" placeholder="비밀번호 확인" />
-            <input class="txtbox-simple" placeholder="이름" />
-            <input class="txtbox-simple" placeholder="휴대폰 번호" />
-            <input class="txtbox-simple" placeholder="중국집" />
-            <input class="txtbox-simple" placeholder="주소1" />
-            <input class="txtbox-simple" placeholder="주소2" />
-            <button class="btn-box">회원 가입</button>
+
         </div>
     </section>
     <footer></footer>

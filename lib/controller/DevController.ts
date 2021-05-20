@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import fs from "fs";
 
+import sassInit from "../SassInit";
 import logger from "../logger";
 
 class DevController {
@@ -25,6 +26,11 @@ class DevController {
                 res.status(200).send(data);
             }
         );
+    }
+
+    public async sassExec(req: Request, res: Response, next: NextFunction) {
+        sassInit();
+        res.status(200).send(`${new Date()}<br>파일 변환 완료`);
     }
 }
 
