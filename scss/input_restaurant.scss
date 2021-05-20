@@ -1,0 +1,106 @@
+@import "init.scss";
+@import "./component/frame.scss";
+@import "./component/buttons.scss";
+@import "./component/txtbox.scss";
+
+.txtbox-wrapper {
+    position:relative;
+
+    padding: 5px 0 0 0;
+}
+
+.txtbox-box {
+    display: flex;
+}
+
+.txtbox-input {
+    border: none;
+    outline: none;
+    padding: 0.8em 0.8em;
+    border-radius: 5px;
+    box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 3px 2px 0 rgba(0, 0, 0, 0.15);
+
+    width: 300%;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    
+    transition-property: box-shadow;
+    transition-duration: 0.3;
+}
+
+.txtbox-input:focus{
+    box-shadow:0 0 1px 1px rgba(0,0,0,0.2), 0 4px 4px 2px rgba(0, 0, 0, 0.15)
+}
+
+.txtbox-input:focus ~ .txtbox-hint {
+    color: transparent;
+}
+
+.txtbox-hint  {
+    position: absolute;
+
+    padding: 0.8em 0.8em;
+    color: #7a7a7a;
+    user-select: none;
+
+    cursor: text;
+
+    top: 0;
+    left: 0;
+}
+
+section {
+    display: flex;
+    align-items: center;
+}
+
+.register-area {
+    @extend .frame ;
+
+	word-break:break-all;
+    display: flex;
+    flex-direction: column;
+
+	font-size:14px;
+	line-height:1.6em;
+
+	margin-bottom: 10px;
+    // padding: 20px 10px 20px 10px;
+    padding: 40px 20px;
+
+    min-width: 500px;
+    margin: 0 auto;
+    
+}
+
+.id-area {
+    display: flex;
+    flex-direction: row;
+
+    & > * {
+        margin-bottom: 0.8em;
+    }
+    margin-top: 10px;
+}  
+
+.jumo-logo {
+    justify-content: center;
+    margin: 0 auto;
+    height: 5em;
+    width: 5em;
+}
+
+
+.button-list {
+    display: flex;
+    flex-direction:space-evenly;
+    column-gap: 0.5em;
+
+    margin: 2.0em 0 0 0;
+    padding-bottom: 1em;
+}
+
+.register-location {
+    display: flex;
+    flex-direction: column;
+}
