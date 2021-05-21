@@ -19,7 +19,29 @@
                     <input type="password" class="txtbox-simple" placeholder="비밀번호" />
                     <input type="password" class="txtbox-simple" placeholder="비밀번호 확인" />
                     <input class="txtbox-simple" placeholder="이름" />
-                    <input class="txtbox-simple" placeholder="휴대폰 번호(-제외)" />
+
+                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="txtbox-simple" maxlength="13"  placeholder="휴대폰 번호(-제외)"/>
+                    
+                    <div class="id-area">
+                        <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="txtbox-input" maxlength="4" placeholder="생년월일(년도)" />
+                        <form>
+                            <select class="txtbox-input" name="birth-month">
+                                <option value="1">1 월</option>
+                                <option value="2">2 월</option>
+                                <option value="3">3 월</option>
+                                <option value="4">4 월</option>
+                                <option value="5">5 월</option>
+                                <option value="6">6 월</option>
+                                <option value="7">7 월</option>
+                                <option value="8">8 월</option>
+                                <option value="9">9 월</option>
+                                <option value="10">10 월</option>
+                                <option value="11">11 월</option>
+                                <option value="12">12 월</option>
+                            </select>
+                        </form>
+                        <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="txtbox-simple" maxlength="2" placeholder="일" />
+                    </div>
                         
                     <div class="button-list">
                         <input class="btn-box" type="submit" value="회원가입" />

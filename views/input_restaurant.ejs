@@ -2,15 +2,15 @@
 <html lang="ko">
 <head>
     <%-include("head") %>
-    <title>JUMO 회원가입</title>
-    <link rel="stylesheet" type="text/css" href="/register_style.css" />
+    <title>JUMO 가게등록</title>
+    <link rel="stylesheet" type="text/css" href="/input_restaurant_style.css" />
 </head>
 <body>
     <header></header>
     <section>
-        <div class="register-area" >
-            <form method="POST" action="/register_pro">
-                <div class="register-location">
+        <div class="input_restaurant-area" >
+            <form method="POST" action="/input-restaurant_pro">
+                <div class="input_restaurant-location">
                     <img class="jumo-logo" src="/jumo-logo.svg" />
                     <input id="txtId" class="txtbox-simple" placeholder="사업자등록번호"/>                 
                     <input class="txtbox-simple" placeholder="가게 명" />
@@ -23,18 +23,17 @@
                     <form>
                         <select class="txtbox-simple" name="category_name">
                             <option value="한식">한식</option>
-                            <option value="한식">한식</option>
-                            <option value="한식">분식</option>
-                            <option value="한식">일식</option>
-                            <option value="한식">카페</option>
-                            <option value="한식">중식</option>
-                            <option value="한식">양식</option>
-                            <option value="한식">치킨</option>
-                            <option value="한식">피자</option>
-                            <option value="한식">햄버거</option>
-                            <option value="한식">족발</option>
-                            <option value="한식">찜탕</option>
-                            <option value="한식">도시락</option>
+                            <option value="분식">분식</option>
+                            <option value="일식">일식</option>
+                            <option value="카페">카페</option>
+                            <option value="중식">중식</option>
+                            <option value="양식">양식</option>
+                            <option value="치킨">치킨</option>
+                            <option value="피자">피자</option>
+                            <option value="햄버거">햄버거</option>
+                            <option value="족발">족발</option>
+                            <option value="찜탕">찜탕</option>
+                            <option value="도시락">도시락</option>
                         </select>
                     </form>
                         

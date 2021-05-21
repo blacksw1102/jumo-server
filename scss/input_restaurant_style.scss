@@ -54,7 +54,7 @@ section {
     align-items: center;
 }
 
-.register-area {
+.input_restaurant-area {
     @extend .frame ;
 
 	word-break:break-all;
@@ -100,7 +100,7 @@ section {
     padding-bottom: 1em;
 }
 
-.register-location {
+.input_restaurant-location {
     display: flex;
     flex-direction: column;
 }
