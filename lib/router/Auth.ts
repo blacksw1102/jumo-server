@@ -9,6 +9,8 @@ export default class AuthRouter {
   constructor() {
     this.Router = express.Router();
 
+    /* 웹 로그인 */
+    this.Router.post("/login_pro", AuthController.webSignin);
     /* 로그인 */
     this.Router.post("/signin", AuthController.signin);
     /* AccessToken 재발급 */
