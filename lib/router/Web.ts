@@ -23,12 +23,16 @@ export default class WebRouter {
         });
 
         this.Router.get("/login", (req, res, next) => {
-            res.render("login.ejs", {}, renderFunction(res));
+            res.render("login.ejs", {req}, renderFunction(res));
         });
 
         this.Router.get("/register", (req, res, next) => {
             res.render("register.ejs", {}, renderFunction(res));
         });
+
+        this.Router.get("/login_failed", (req, res, next) => {
+            res.render("login_failed.ejs", {}, renderFunction(res));
+        })
     }
 
     public getRouter(): express.Router {
